@@ -1,0 +1,17 @@
+framework module DictionaryServicesWrapper {
+    module Base {
+        umbrella header "DictionaryServicesWrapper.h"
+    }
+
+    explicit module FrameworkInternals {
+        header "FrameworkInternals.h"
+    }
+
+    explicit module FrameworkBridging {
+        export Base
+        export FrameworkInternals
+        header "FrameworkBridging.h"
+    }
+
+    export Base
+}

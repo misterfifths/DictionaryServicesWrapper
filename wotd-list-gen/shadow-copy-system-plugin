@@ -1,0 +1,37 @@
+#!/bin/bash
+
+set -euo --pipefail
+
+function die() {
+    echo -e "💀 $*"
+    exit 1
+}
+
+
+SRC="/System/Library/Graphics/Quartz Composer Plug-Ins/WOTD.plugin"
+DEST="$HOME/Library/Graphics/Quartz Composer Plug-Ins/WOTD.plugin"
+
+[ -d "$SRC" ] || die "Couldn't find system plugin at $SRC"
+
+if [ -d "$DEST" ]; then
+    die "$DEST already exists.\nDelete it and re-run this script if you want to make a new copy."
+else
+    echo "Making per-user plugin directory at $DEST ..."
+    mkdir -p "$DEST"
+fi
+
+find "$SRC" -mindepth 1 -print0 |
+    while IFS= read -r -d '' sourceFilename; do
+        relativeFilename=${sourceFilename#"$SRC/"}
+        destFilename="$DEST/$relativeFilename"
+
+        if [ -d "$sourceFilename" ]; then
+            echo ">> dir $relativeFilename"
+            mkdir "$destFilename"
+        else
+            echo "   ln $relativeFilename"
+            ln "$sourceFilename" "$destFilename"
+        fi
+    done
+
+echo "All done! 🎉"

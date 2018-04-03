@@ -1,0 +1,72 @@
+#!/bin/bash
+
+set -euo pipefail
+
+function die() {
+    echo -e "💀 $*"
+    exit 1
+}
+
+function runOptionalCommand() {
+    set +e
+    "$@" 2>/dev/null
+    set -e
+}
+
+function doItOrSudoIt() {
+    set +e
+    "$@" 2>/dev/null
+    local exitStatus=$?
+    set -e
+
+    if [[ $exitStatus == 0 ]]; then
+        echo "$@"
+    else
+        echo sudo "$@"
+        sudo "$@"
+    fi
+}
+
+DEST_DIR="/Library/Managed Preferences/$USER"
+PLIST_FILE="com.apple.Dictionary.plist"
+
+USER_AND_GROUP_FOR_CHOWN="$USER:$(id -gn "$USER")"
+
+cd "$(dirname "$0")"
+
+[ -f "$PLIST_FILE" ] || die "Couldn't find our plist payload $SRC"
+
+[ -f "$DEST_DIR/$PLIST_FILE" ] && die "Our payload already exists @ $DEST_DIR/$PLIST_FILE\nDelete it and run this to continue again."
+
+echo ">> Copying preference file..."
+
+if [ ! -d "$DEST_DIR" ]; then
+    doItOrSudoIt mkdir -p "$DEST_DIR"
+    doItOrSudoIt chown "$USER_AND_GROUP_FOR_CHOWN" "$DEST_DIR"
+    MADE_DEST_DIR=1
+fi
+
+doItOrSudoIt cp "$PLIST_FILE" "$DEST_DIR"
+
+echo ">> Restarting cfprefsd..."
+runOptionalCommand killall -HUP cfprefsd
+
+echo ">> Starting app. Quit it when you're done and we'll clean up gracefully."
+echo ">> If something goes wrong, you can manually clean up by deleting $DEST_DIR."
+
+set +e
+open -Wnb com.apple.Dictionary
+set -e
+
+tput bel
+
+echo ">> Cleaning up preferences..."
+
+doItOrSudoIt rm "$DEST_DIR/$PLIST_FILE"
+
+if [[ $MADE_DEST_DIR == 1 ]]; then
+    doItOrSudoIt rmdir "$DEST_DIR"
+fi
+
+echo ">> Restarting cfprefsd..."
+runOptionalCommand killall -HUP cfprefsd
