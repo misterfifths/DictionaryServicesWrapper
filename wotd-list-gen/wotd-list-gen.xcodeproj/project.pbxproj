@@ -7,84 +7,76 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BDB0991A2072CAB100EFD4A2 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB099192072CAB100EFD4A2 /* main.swift */; };
-		BDBB4C402072F614006071F5 /* DictionaryServicesWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDBB4C3F2072F614006071F5 /* DictionaryServicesWrapper.framework */; };
+		BD416315207401520025050D /* DictionaryServicesWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD416314207401520025050D /* DictionaryServicesWrapper.framework */; };
+		BD46272C20799E7300757D5E /* WotDEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = BD46272B20799E7300757D5E /* WotDEntry.m */; };
+		BDBB4C6420740093006071F5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BDBB4C6320740093006071F5 /* main.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		BDB099142072CAB100EFD4A2 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		BDB099162072CAB100EFD4A2 /* wotd-list-gen */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "wotd-list-gen"; sourceTree = BUILT_PRODUCTS_DIR; };
-		BDB099192072CAB100EFD4A2 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		BDBB4C3F2072F614006071F5 /* DictionaryServicesWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DictionaryServicesWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD416314207401520025050D /* DictionaryServicesWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DictionaryServicesWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD46272A20799E7300757D5E /* WotDEntry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WotDEntry.h; sourceTree = "<group>"; };
+		BD46272B20799E7300757D5E /* WotDEntry.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WotDEntry.m; sourceTree = "<group>"; };
+		BDBB4C6020740093006071F5 /* wotd-list-gen */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "wotd-list-gen"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BDBB4C6320740093006071F5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		BDB099132072CAB100EFD4A2 /* Frameworks */ = {
+		BDBB4C5D20740093006071F5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BDBB4C402072F614006071F5 /* DictionaryServicesWrapper.framework in Frameworks */,
+				BD416315207401520025050D /* DictionaryServicesWrapper.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		BDB0990D2072CAB100EFD4A2 = {
+		BD416313207401520025050D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BDB099182072CAB100EFD4A2 /* wotd-list-gen */,
-				BDB099172072CAB100EFD4A2 /* Products */,
-				BDBB4C3E2072F614006071F5 /* Frameworks */,
+				BD416314207401520025050D /* DictionaryServicesWrapper.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BDBB4C5720740093006071F5 = {
+			isa = PBXGroup;
+			children = (
+				BDBB4C6220740093006071F5 /* wotd-list-gen */,
+				BDBB4C6120740093006071F5 /* Products */,
+				BD416313207401520025050D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
-		BDB099172072CAB100EFD4A2 /* Products */ = {
+		BDBB4C6120740093006071F5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BDB099162072CAB100EFD4A2 /* wotd-list-gen */,
+				BDBB4C6020740093006071F5 /* wotd-list-gen */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		BDB099182072CAB100EFD4A2 /* wotd-list-gen */ = {
+		BDBB4C6220740093006071F5 /* wotd-list-gen */ = {
 			isa = PBXGroup;
 			children = (
-				BDB099192072CAB100EFD4A2 /* main.swift */,
+				BDBB4C6320740093006071F5 /* main.m */,
+				BD46272A20799E7300757D5E /* WotDEntry.h */,
+				BD46272B20799E7300757D5E /* WotDEntry.m */,
 			);
 			name = "wotd-list-gen";
 			path = Source;
 			sourceTree = "<group>";
 		};
-		BDBB4C3E2072F614006071F5 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				BDBB4C3F2072F614006071F5 /* DictionaryServicesWrapper.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		BDB099152072CAB100EFD4A2 /* wotd-list-gen */ = {
+		BDBB4C5F20740093006071F5 /* wotd-list-gen */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BDB0991D2072CAB100EFD4A2 /* Build configuration list for PBXNativeTarget "wotd-list-gen" */;
+			buildConfigurationList = BDBB4C6720740093006071F5 /* Build configuration list for PBXNativeTarget "wotd-list-gen" */;
 			buildPhases = (
-				BDB099122072CAB100EFD4A2 /* Sources */,
-				BDB099132072CAB100EFD4A2 /* Frameworks */,
-				BDB099142072CAB100EFD4A2 /* CopyFiles */,
+				BDBB4C5C20740093006071F5 /* Sources */,
+				BDBB4C5D20740093006071F5 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -92,54 +84,54 @@
 			);
 			name = "wotd-list-gen";
 			productName = "wotd-list-gen";
-			productReference = BDB099162072CAB100EFD4A2 /* wotd-list-gen */;
+			productReference = BDBB4C6020740093006071F5 /* wotd-list-gen */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		BDB0990E2072CAB100EFD4A2 /* Project object */ = {
+		BDBB4C5820740093006071F5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0930;
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Misterfifths Heavy Industries";
 				TargetAttributes = {
-					BDB099152072CAB100EFD4A2 = {
+					BDBB4C5F20740093006071F5 = {
 						CreatedOnToolsVersion = 9.3;
 					};
 				};
 			};
-			buildConfigurationList = BDB099112072CAB100EFD4A2 /* Build configuration list for PBXProject "wotd-list-gen" */;
+			buildConfigurationList = BDBB4C5B20740093006071F5 /* Build configuration list for PBXProject "wotd-list-gen" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = BDB0990D2072CAB100EFD4A2;
-			productRefGroup = BDB099172072CAB100EFD4A2 /* Products */;
+			mainGroup = BDBB4C5720740093006071F5;
+			productRefGroup = BDBB4C6120740093006071F5 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				BDB099152072CAB100EFD4A2 /* wotd-list-gen */,
+				BDBB4C5F20740093006071F5 /* wotd-list-gen */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		BDB099122072CAB100EFD4A2 /* Sources */ = {
+		BDBB4C5C20740093006071F5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BDB0991A2072CAB100EFD4A2 /* main.swift in Sources */,
+				BDBB4C6420740093006071F5 /* main.m in Sources */,
+				BD46272C20799E7300757D5E /* WotDEntry.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		BDB0991B2072CAB100EFD4A2 /* Debug */ = {
+		BDBB4C6520740093006071F5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -194,12 +186,10 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
-		BDB0991C2072CAB100EFD4A2 /* Release */ = {
+		BDBB4C6620740093006071F5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -247,53 +237,73 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
 		};
-		BDB0991E2072CAB100EFD4A2 /* Debug */ = {
+		BDBB4C6820740093006071F5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_STATIC_ANALYZER_MODE = deep;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9H94YF52ZT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Wpedantic",
+					"-Weverything",
+					"-Wno-auto-import",
+					"-Wno-objc-missing-property-synthesis",
+					"-Wno-direct-ivar-access",
+					"-Wno-gnu-conditional-omitted-operand",
+					"-Wno-gnu-zero-variadic-macro-arguments",
+				);
 			};
 			name = Debug;
 		};
-		BDB0991F2072CAB100EFD4A2 /* Release */ = {
+		BDBB4C6920740093006071F5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_STATIC_ANALYZER_MODE = deep;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9H94YF52ZT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Wpedantic",
+					"-Weverything",
+					"-Wno-auto-import",
+					"-Wno-objc-missing-property-synthesis",
+					"-Wno-direct-ivar-access",
+					"-Wno-gnu-conditional-omitted-operand",
+					"-Wno-gnu-zero-variadic-macro-arguments",
+				);
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BDB099112072CAB100EFD4A2 /* Build configuration list for PBXProject "wotd-list-gen" */ = {
+		BDBB4C5B20740093006071F5 /* Build configuration list for PBXProject "wotd-list-gen" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				BDB0991B2072CAB100EFD4A2 /* Debug */,
-				BDB0991C2072CAB100EFD4A2 /* Release */,
+				BDBB4C6520740093006071F5 /* Debug */,
+				BDBB4C6620740093006071F5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BDB0991D2072CAB100EFD4A2 /* Build configuration list for PBXNativeTarget "wotd-list-gen" */ = {
+		BDBB4C6720740093006071F5 /* Build configuration list for PBXNativeTarget "wotd-list-gen" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				BDB0991E2072CAB100EFD4A2 /* Debug */,
-				BDB0991F2072CAB100EFD4A2 /* Release */,
+				BDBB4C6820740093006071F5 /* Debug */,
+				BDBB4C6920740093006071F5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = BDB0990E2072CAB100EFD4A2 /* Project object */;
+	rootObject = BDBB4C5820740093006071F5 /* Project object */;
 }
