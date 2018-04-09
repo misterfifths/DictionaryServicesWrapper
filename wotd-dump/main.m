@@ -23,8 +23,7 @@
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         // Load dat bundle.
-        // I didn't try +[QCPlugin loadPlugInAtPath:], but I bet it would honor the restricted host
-        // settings in the Info.plist, so I'm just going this route.
+        // +[QCPlugin loadPlugInAtPath:] honors the restricted host settings in the Info.plist, so I'm just going this route.
 
         NSArray *libraryURLs = [NSFileManager.defaultManager URLsForDirectory:NSLibraryDirectory inDomains:NSAllDomainsMask];
         NSURL *pluginURL = nil;
@@ -66,12 +65,12 @@ int main(int argc, const char * argv[]) {
         // Pull out the entry we want.
         NSArray *dictionaries = [pluginClass dictionaryList];
         NSString *noadName = @"New Oxford American Dictionary";
-        NSString *winningInfoDictSuffix = @"DIRTY";
+        NSString *winningInfoDictFilename = @"noad-super-list.plist";
         NSDictionary *noadDictInfo = nil;
         for(NSDictionary *dictInfo in dictionaries) {
             if([dictInfo[@"dictName"] isEqualToString:noadName]) {
                 NSURL *url = dictInfo[@"wotdInfoURL"];
-                if([url.lastPathComponent.stringByDeletingPathExtension hasSuffix:winningInfoDictSuffix]) {
+                if([url.lastPathComponent isEqualToString:winningInfoDictFilename]) {
                     noadDictInfo = dictInfo;
                     break;
                 }
