@@ -6,6 +6,7 @@
 #import "DSDictionary.h"
 #import "FrameworkInternals.h"
 #import "DSRecordPrivate.h"
+#import "DSMiscUtils.h"
 
 
 @interface DSRecord ()
@@ -47,7 +48,7 @@
 
 -(NSString *)displayWord
 {
-    return self.title ?: self.textElements.title ?: self.headword ?: self.textElements.headword ?: self.rawHeadword ?: self.keyword ?: self.supplementalHeadword ?: self.textElements.recordID ?: @"";
+    return DSFirstNonEmptyString(self.title, self.textElements.title, self.headword, self.textElements.headword, self.rawHeadword, self.keyword, self.supplementalHeadword, self.textElements.referenceID) ?: @"";
 }
 
 -(NSString *)plainTextDefinition
@@ -60,8 +61,8 @@
     NSMutableString *contentDesc = [NSMutableString new];
     NSString *spacer = @"";
 
-    if(self.textElements.recordID) {
-        [contentDesc appendString:(NSString * __nonnull)self.textElements.recordID];
+    if(self.textElements.referenceID) {
+        [contentDesc appendString:(NSString * __nonnull)self.textElements.referenceID];
         spacer = @" ";
     }
     if(self.title) {

@@ -3,12 +3,14 @@
 // Public domain.
 
 #import <Foundation/Foundation.h>
-#import "DSCommon.h"
+#import "DSDefines.h"
+#import "DSConstants.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
 
 
+NS_SWIFT_NAME(DSIndex.Field)
 @interface DSIndexField : NSObject
 
 @property (nonatomic, readonly, copy) NSString *name;
@@ -17,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 +(instancetype)new NS_UNAVAILABLE;
 -(instancetype)init NS_UNAVAILABLE;
 
--(nullable instancetype)initWithInfoDictionary:(NSDictionary<NSString *, id> *)indexInfoDictionary;
+-(nullable instancetype)initWithInfoDictionary:(NSDictionary<DSIndexFieldInfoKey, id> *)indexInfoDictionary;
 
 -(nullable id)decodeValueFromBytes:(void *)bytes length:(size_t)length DS_WARN_UNUSED_RESULT;
 

@@ -5,7 +5,8 @@
 #import "DSRecordTextElements.h"
 #import "DSDictionary.h"
 #import "DSEnvironment.h"
-#import "NSXMLDocument+DSHelpers.h"
+#import "DSXMLUtils.h"
+#import "DSMutableDictionaryWrapperUtils.h"
 
 
 @implementation DSRecordTextElements
@@ -28,75 +29,15 @@
     return keySet;
 }
 
--(NSString *)recordID
-{
-    return self[DSTextElementKeyRecordID];
-}
 
--(void)setRecordID:(NSString *)recordID
-{
-    self[DSTextElementKeyRecordID] = [recordID copy];
-}
+DS_MDW_StringPropertyImpl(referenceID, setReferenceID, DSTextElementKeyRecordID);
+DS_MDW_StringPropertyImpl(headword, setHeadword, DSTextElementKeyHeadword);
+DS_MDW_StringPropertyImpl(title, setTitle, DSTextElementKeyTitle);
+DS_MDW_StringPropertyImpl(syllabifiedHeadword, setSyllabifiedHeadword, DSTextElementKeySyllabifiedHeadword);
+DS_MDW_StringPropertyImpl(partOfSpeech, setPartOfSpeech, DSTextElementKeyPartOfSpeech);
+DS_MDW_StringPropertyImpl(pronunciation, setPronunciation, DSTextElementKeyPronunciation);
+DS_MDW_ArrayPropertyImpl(senses, setSenses, DSTextElementKeySenses);
 
--(NSString *)headword
-{
-    return self[DSTextElementKeyHeadword];
-}
-
--(void)setHeadword:(NSString *)headword
-{
-    self[DSTextElementKeyHeadword] = [headword copy];
-}
-
--(NSString *)title
-{
-    return self[DSTextElementKeyTitle];
-}
-
--(void)setTitle:(NSString *)title
-{
-    self[DSTextElementKeyTitle] = [title copy];
-}
-
--(NSString *)syllabifiedHeadword
-{
-    return self[DSTextElementKeySyllabifiedHeadword];
-}
-
--(void)setSyllabifiedHeadword:(NSString *)syllabifiedHeadword
-{
-    self[DSTextElementKeySyllabifiedHeadword] = [syllabifiedHeadword copy];
-}
-
--(NSString *)partOfSpeech
-{
-    return self[DSTextElementKeyPartOfSpeech];
-}
-
--(void)setPartOfSpeech:(NSString *)partOfSpeech
-{
-    self[DSTextElementKeyPartOfSpeech] = [partOfSpeech copy];
-}
-
--(NSString *)pronunciation
-{
-    return self[DSTextElementKeyPronunciation];
-}
-
--(void)setPronunciation:(NSString *)pronunciation
-{
-    self[DSTextElementKeyPronunciation] = [pronunciation copy];
-}
-
--(NSArray *)senses
-{
-    return self[DSTextElementKeySenses];
-}
-
--(void)setSenses:(NSArray *)senses
-{
-    self[DSTextElementKeySenses] = [senses copy];
-}
 
 -(instancetype)initWithXMLDocument:(NSXMLDocument *)xmlDoc dictionary:(DSDictionary *)dictionary
 {
@@ -151,8 +92,8 @@
     else {
         NSString *spacer = @"";
 
-        if(self.recordID) {
-            [contentDesc appendFormat:@"%@", self.recordID];
+        if(self.referenceID) {
+            [contentDesc appendFormat:@"%@", self.referenceID];
             --extraFieldCount;
             spacer = @" ";
         }

@@ -3,21 +3,23 @@
 // Public domain.
 
 #import <Foundation/Foundation.h>
+#import "DSDefines.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
 
 
+NS_SWIFT_NAME(DSDictionary.ContentLanguagePair)
 @interface DSContentLanguagePair : NSObject
 
 // Language of search terms in the dictionary
 @property (nonatomic, readonly, copy) NSString *indexLanguageID;
--(NSString *)indexLanguageNameInLocale:(nullable NSLocale *)nameLocale;
+-(NSString *)indexLanguageNameInLocale:(nullable NSLocale *)nameLocale DS_WARN_UNUSED_RESULT;
 @property (nonatomic, readonly, strong) NSLocale *indexLocale;
 
 // Language of the descriptions/definitions in the dictionary
 @property (nonatomic, readonly, copy) NSString *definitionLanguageID;
--(NSString *)definitionLanguageNameInLocale:(nullable NSLocale *)nameLocale;
+-(NSString *)definitionLanguageNameInLocale:(nullable NSLocale *)nameLocale DS_WARN_UNUSED_RESULT;
 @property (nonatomic, readonly, strong) NSLocale *definitionLocale;
 
 

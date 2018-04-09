@@ -5,8 +5,6 @@
 #import <Foundation/Foundation.h>
 
 
-#define DS_WARN_UNUSED_RESULT __attribute__((warn_unused_result))
-
 #define DSStringify(...) #__VA_ARGS__
 
 #define DSExternAlias(type, dsName, dictionaryServicesName) \
@@ -21,6 +19,29 @@ typedef NSString *DSIndexName NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(DSIndex.Wel
 extern DSIndexName const DSIndexNameKeyword;
 extern DSIndexName const DSIndexNameBodyData;
 extern DSIndexName const DSIndexNameReference;
+
+
+typedef NSString *DSIndexInfoKey NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(DSIndexInfo.WellKnownKey);
+DSExternAlias(DSIndexInfoKey const, DSIndexInfoKeyName, kIDXPropertyIndexName);
+DSExternAlias(DSIndexInfoKey const, DSIndexInfoKeyPath, kIDXPropertyIndexPath);
+DSExternAlias(DSIndexInfoKey const, DSIndexInfoKeyAccessMethod, kIDXPropertyIndexAccessMethod);
+DSExternAlias(DSIndexInfoKey const, DSIndexInfoKeyKeyMatchingMethods, kIDXPropertyIndexKeyMatchingMethods);
+DSExternAlias(DSIndexInfoKey const, DSIndexInfoKeyDataSizeLength, kIDXPropertyIndexDataSizeLength);
+DSExternAlias(DSIndexInfoKey const, DSIndexInfoKeyWritable, kIDXPropertyIndexWritable);
+DSExternAlias(DSIndexInfoKey const, DSIndexInfoKeySupportsDataID, kIDXPropertyIndexSupportDataID); // sic
+DSExternAlias(DSIndexInfoKey const, DSIndexInfoKeyBigEndian, kIDXPropertyIndexBigEndian);
+DSExternAlias(DSIndexInfoKey const, DSIndexInfoKeyDataFields, kIDXPropertyDataFields);
+
+typedef NSString *DSIndexInfoDataFieldsKey NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(DSIndexInfo.WellKnownDataFieldsKey);
+DSExternAlias(DSIndexInfoDataFieldsKey const, DSIndexInfoDataFieldsKeyExternalFields, kIDXPropertyExternalFields);
+DSExternAlias(DSIndexInfoDataFieldsKey const, DSIndexInfoDataFieldsKeyFixedFields, kIDXPropertyFixedFields);
+DSExternAlias(DSIndexInfoDataFieldsKey const, DSIndexInfoDataFieldsKeyVariableFields, kIDXPropertyVariableFields);
+
+typedef NSString *DSIndexFieldInfoKey NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(DSIndexField.WellKnownInfoKey);
+DSExternAlias(DSIndexFieldInfoKey const, DSIndexFieldInfoKeyName, kIDXPropertyDataFieldName);
+DSExternAlias(DSIndexFieldInfoKey const, DSIndexFieldInfoKeyExternalIndexName, kIDXPropertyIndexName);  // sic
+DSExternAlias(DSIndexFieldInfoKey const, DSIndexFieldInfoKeyDataSize, kIDXPropertyDataSize);
+DSExternAlias(DSIndexFieldInfoKey const, DSIndexFieldInfoKeyDataSizeLength, kIDXPropertyDataSizeLength);
 
 
 typedef NSString *DSIndexFieldName NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(DSIndexField.WellKnownName);

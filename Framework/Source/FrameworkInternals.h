@@ -5,6 +5,23 @@
 #import <CoreServices/CoreServices.h>
 
 
+// Exported methods from the DictonaryServices framework, lovingly reverse-engineered.
+
+// These methods actually return CF types (strings, arrays, etc.), but I've just translated all of those
+// to NS types, since that just works, and avoids a ton of bridge casts.
+
+// Also these have been audited for NS_RETURNS_RETAINED, though I'm not strictly sure if that was
+// necessary... clang docs were unclear on whether that's determined from that method name
+// (create/get/copy rule), so I just did it. (CF_RETURNS_RETAINED, on the other hand, is documented to
+// do the right thing based on function names, so I've left that off when a function returns
+// a CF type.)
+
+// Nullability annotations are a bit of a guess in most cases, but seem sound enough.
+
+// There are a lot of useful strings & constants that aren't exported by the framework. Those are
+// collected manually in DSConstants.h/m.
+
+
 #pragma mark - Types
 
 typedef CFTypeRef DCSRecordRef;
@@ -16,17 +33,29 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Constants
 
-extern NSString * const kDCSDictionaryDescriptionLanguage;
-extern NSString * const kDCSDictionaryIndexLanguage;
+typedef NSString * const DCSDictionaryLanguageKey NS_TYPED_EXTENSIBLE_ENUM;
+extern DCSDictionaryLanguageKey kDCSDictionaryDescriptionLanguage;
+extern DCSDictionaryLanguageKey kDCSDictionaryIndexLanguage;
 
-extern NSString * const kIDXSearchExactMatch;
-extern NSString * const kIDXSearchPrefixMatch;
-extern NSString * const kIDXSearchCommonPrefixMatch;
-extern NSString * const kIDXSearchWildcardMatch;
-extern NSString * const kIDXSearchAllMatch;
+typedef NSString * const IDXSearchMethod NS_TYPED_EXTENSIBLE_ENUM;
+extern IDXSearchMethod kIDXSearchExactMatch;
+extern IDXSearchMethod kIDXSearchPrefixMatch;
+extern IDXSearchMethod kIDXSearchCommonPrefixMatch;
+extern IDXSearchMethod kIDXSearchWildcardMatch;
+extern IDXSearchMethod kIDXSearchAllMatch;
 
+typedef NSString * const DCSTextElementKey NS_TYPED_EXTENSIBLE_ENUM;
+extern DCSTextElementKey kDCSTextElementKeyRecordID;
+extern DCSTextElementKey kDCSTextElementKeyHeadword;
+extern DCSTextElementKey kDCSTextElementKeySyllabifiedHeadword;
+extern DCSTextElementKey kDCSTextElementKeyPartOfSpeech;
+extern DCSTextElementKey kDCSTextElementKeyPronunciation;
+extern DCSTextElementKey kDCSTextElementKeySenses;
+
+// Key for the list of index info dictionaries in the DCSDictionary's info.plist
 extern NSString * const kIDXPropertyIndexList;
 
+// These are keys in an index info dictionary
 extern NSString * const kIDXPropertyIndexName;
 extern NSString * const kIDXPropertyIndexPath;
 extern NSString * const kIDXPropertyIndexAccessMethod;
@@ -35,31 +64,25 @@ extern NSString * const kIDXPropertyIndexDataSizeLength;
 extern NSString * const kIDXPropertyIndexWritable;
 extern NSString * const kIDXPropertyIndexSupportDataID;
 extern NSString * const kIDXPropertyIndexBigEndian;
-
 extern NSString * const kIDXPropertyDataFields;
 extern NSString * const kIDXPropertyExternalFields;
 extern NSString * const kIDXPropertyFixedFields;
 extern NSString * const kIDXPropertyVariableFields;
+
+// And these are keys inside the individual field dictionaries
 extern NSString * const kIDXPropertyDataFieldName;
 extern NSString * const kIDXPropertyDataSize;
 extern NSString * const kIDXPropertyDataSizeLength;
-
-extern NSString * const kDCSTextElementKeyRecordID;
-extern NSString * const kDCSTextElementKeyHeadword;
-extern NSString * const kDCSTextElementKeySyllabifiedHeadword;
-extern NSString * const kDCSTextElementKeyPartOfSpeech;
-extern NSString * const kDCSTextElementKeyPronunciation;
-extern NSString * const kDCSTextElementKeySenses;
 
 
 
 #pragma mark - Enums
 
-typedef NS_ENUM(NSUInteger, DCSSearchMethod) {
-    DCSSearchMethodExactMatch,
-    DCSSearchMethodPrefixMatch,
-    DCSSearchMethodCommonPrefixMatch,
-    DCSSearchMethodWildcardMatch
+typedef NS_ENUM(NSUInteger, DCSDictionarySearchMethod) {
+    DCSDictionarySearchMethodExactMatch,
+    DCSDictionarySearchMethodPrefixMatch,
+    DCSDictionarySearchMethodCommonPrefixMatch,
+    DCSDictionarySearchMethodWildcardMatch
 };
 
 typedef NS_ENUM(NSUInteger, DCSDefinitionStyle) {
@@ -71,8 +94,8 @@ typedef NS_ENUM(NSUInteger, DCSDefinitionStyle) {
 };
 
 typedef NS_OPTIONS(NSUInteger, DCSearchStringNormalizationOptions) {
-    DCSearchStringNormalizationOptionNone = 0,
-    DCSearchStringNormalizationOptionMaintainCase = 1
+    DCSearchStringNormalizationOptionNone,
+    DCSearchStringNormalizationOptionMaintainCase
 };
 
 
@@ -105,14 +128,14 @@ extern Boolean DCSDictionaryIsSupportedDefinitionStyle(DCSDictionaryRef dictiona
 extern NSDictionary<NSString *, id> * __nullable DCSDictionaryGetPreferences(DCSDictionaryRef dictionary);
 extern NSArray * __nullable DCSDictionaryGetSubDictionaries(DCSDictionaryRef dictionary);
 
-extern NSArray<NSDictionary<NSString *, NSString *> *> * __nullable DCSDictionaryGetLanguages(DCSDictionaryRef dictionary);
+extern NSArray<NSDictionary<DCSDictionaryLanguageKey, NSString *> *> * __nullable DCSDictionaryGetLanguages(DCSDictionaryRef dictionary);
 extern NSString * __nullable DCSDictionaryGetPrimaryLanguage(DCSDictionaryRef dictionary);
 
 
 #pragma mark Queries
 
-extern NSArray * __nullable DCSCopyRecordsForSearchString(DCSDictionaryRef dictionary, NSString *string, DCSSearchMethod searchMethod, NSUInteger maxResults) NS_RETURNS_RETAINED;
-extern DCSRecordRef __nullable DCSCopyRecordForReference(DCSDictionaryRef dict, NSString *reference);
+extern NSArray * __nullable DCSCopyRecordsForSearchString(DCSDictionaryRef dictionary, NSString *string, DCSDictionarySearchMethod searchMethod, NSUInteger maxResults) NS_RETURNS_RETAINED;
+extern DCSRecordRef __nullable DCSCopyRecordForReference(DCSDictionaryRef dict, NSString *referenceID);
 
 
 
@@ -127,7 +150,7 @@ extern NSString * __nullable DCSRecordGetTitle(DCSRecordRef record);
 extern NSString * __nullable DCSRecordGetAnchor(DCSRecordRef record);
 
 extern NSString * __nullable DCSRecordCopyDefinition(DCSRecordRef record, DCSDefinitionStyle format) NS_RETURNS_RETAINED;  // It seems that style 4 (raw) will make this return an NSData. But, I have yet to see any dictionaries that support that style.
-extern NSDictionary<NSString *, id> * __nullable DCSRecordCopyTextElements(DCSRecordRef record, NSArray<NSString *> * __nullable requestedElementNames) NS_RETURNS_RETAINED;  // nil requestedElementNames means return everything. If none of the keys in requestedElementNames are in the record, returns nil
+extern NSDictionary<DCSTextElementKey, id> * __nullable DCSRecordCopyTextElements(DCSRecordRef record, NSArray<DCSTextElementKey> * __nullable requestedElementNames) NS_RETURNS_RETAINED;  // nil requestedElementNames means return everything. If none of the keys in requestedElementNames are in the record, returns nil
 
 //extern NSString *DCSRecordCopyData(DCSRecordRef record, DCSDefinitionFormat format) NS_RETURNS_RETAINED;  // synonym for CopyDefinition, except it explicitly returns nil for DCSDefinitionStyleRaw. That seems useless, and like they're named backward...
 
@@ -147,16 +170,16 @@ extern IDXIndexRef __nullable IDXCreateIndexObject(CFAllocatorRef __nullable all
 #pragma mark Queries
 
 extern void IDXSetRequestFields(IDXIndexRef idx, NSArray<NSString *> *fieldNames);
-extern Boolean IDXSetSearchString(IDXIndexRef idx, NSString *searchString, NSString *matchMethod);
+extern Boolean IDXSetSearchString(IDXIndexRef idx, NSString *searchString, IDXSearchMethod matchMethod);
 extern Boolean IDXContainsMatchData(IDXIndexRef idx);  // Unclear how/if this works... returns false a lot
 
 extern Boolean IDXSupportsDataPtr(IDXIndexRef idx);
 
-uint32_t IDXGetMatchData(IDXIndexRef idxRef, uint32_t maxResults, uint32_t bufferLength, void *buffer, CFRange * _Nonnull * _Nonnull outRanges, uint32_t * __nullable outInt);
-extern int64_t IDXGetFieldDataPtrs(IDXIndexRef idx, void *fieldData, size_t fieldDataLength, void * _Nonnull * _Nonnull fieldPtrs, size_t *fieldLengths);
+uint32_t IDXGetMatchData(IDXIndexRef idxRef, uint32_t maxResults, uint32_t bufferLength, void *buffer, CFRange * __nonnull * __nonnull outRanges, uint32_t * __nullable outInt);
+extern int64_t IDXGetFieldDataPtrs(IDXIndexRef idx, void *fieldData, size_t fieldDataLength, void * __nonnull * __nonnull fieldPtrs, size_t *fieldLengths);
 
 typedef void (*IDXPerformSearchCallback)(IDXIndexRef idx, void *fieldData, size_t fieldDataLength, uint32_t alwaysOne, void * __nullable context);
-extern void IDXPerformSearch(IDXIndexRef idx, IDXPerformSearchCallback callback, void * __nullable context);  // callback signature seems to vary depending on SupportDataPtr, and maybe more?
+extern void IDXPerformSearch(IDXIndexRef idx, IDXPerformSearchCallback callback, void * __nullable context);  // callback signature seems like it might vary depending on SupportDataPtr? Haven't tested.
 
 extern size_t IDXGetDataByID(IDXIndexRef idx, uint64_t recordID, size_t bufferSize, void * __nullable buffer);  // If you pass 0 for bufferSize and NULL for the buffer, this returns the number of bytes needed to contain the data
 extern size_t IDXGetDataPtrByID(IDXIndexRef idx, uint64_t recordID, void * __nullable * __nonnull outBuffer);
@@ -191,6 +214,7 @@ extern void DCSNormalizeSearchStringWithOptionsAndLocale(NSMutableString *string
 
 #pragma mark - Cleanup
 
+// I'm crazy. Renamining some methods that had weird names.
 #pragma redefine_extname DCSDictionaryGetPreferences _DCSDictionaryGetPreference
 #pragma redefine_extname IDXSupportsDataPtr _IDXSupportDataPtr
 

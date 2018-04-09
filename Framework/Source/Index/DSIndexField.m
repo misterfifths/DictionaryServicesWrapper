@@ -15,14 +15,14 @@
 
 @implementation DSIndexField
 
--(instancetype)initWithInfoDictionary:(NSDictionary *)dictionary
+-(instancetype)initWithInfoDictionary:(NSDictionary<DSIndexFieldInfoKey, id> *)dictionary
 {
     NSAssert(self.class != [DSIndexField class], @"Make instances of subclasses, not DSIndexField");
 
     self = [super init];
     if(self) {
-        _name = [dictionary[kIDXPropertyDataFieldName] copy];
-        NSAssert(_name != nil, @"Index dictionary is missing %@ field", kIDXPropertyDataFieldName);
+        _name = [dictionary[DSIndexFieldInfoKeyName] copy];
+        NSAssert(_name != nil, @"Index dictionary is missing %@ field", DSIndexFieldInfoKeyName);
     }
 
     return self;
@@ -47,12 +47,12 @@
 
 @implementation DSFixedLengthIndexField
 
--(instancetype)initWithInfoDictionary:(NSDictionary *)dictionary
+-(instancetype)initWithInfoDictionary:(NSDictionary<DSIndexFieldInfoKey, id> *)dictionary
 {
     self = [super initWithInfoDictionary:dictionary];
     if(self) {
-        NSNumber *dataSizeNumber = dictionary[kIDXPropertyDataSize];
-        NSAssert(dataSizeNumber != nil, @"Index dictionary for %@ is missing %@ field", self.name, kIDXPropertyDataSize);
+        NSNumber *dataSizeNumber = dictionary[DSIndexFieldInfoKeyDataSize];
+        NSAssert(dataSizeNumber != nil, @"Index dictionary for %@ is missing %@ field", self.name, DSIndexFieldInfoKeyDataSize);
 
         _dataSize = dataSizeNumber.unsignedIntegerValue;
     }
@@ -87,12 +87,12 @@
 
 @implementation DSExternalDataIndexField
 
--(instancetype)initWithInfoDictionary:(NSDictionary *)dictionary
+-(instancetype)initWithInfoDictionary:(NSDictionary<DSIndexFieldInfoKey, id> *)dictionary
 {
     self = [super initWithInfoDictionary:dictionary];
     if(self) {
-        _externalIndexName = [dictionary[kIDXPropertyIndexName] copy];
-        NSAssert(_externalIndexName != nil, @"Index dictionary for %@ is missing %@ field", self.name, kIDXPropertyIndexName);
+        _externalIndexName = [dictionary[DSIndexFieldInfoKeyExternalIndexName] copy];
+        NSAssert(_externalIndexName != nil, @"Index dictionary for %@ is missing %@ field", self.name, DSIndexFieldInfoKeyExternalIndexName);
     }
 
     return self;
@@ -111,12 +111,12 @@
 
 @implementation DSVariableLengthIndexField
 
--(instancetype)initWithInfoDictionary:(NSDictionary *)dictionary
+-(instancetype)initWithInfoDictionary:(NSDictionary<DSIndexFieldInfoKey, id> *)dictionary
 {
     self = [super initWithInfoDictionary:dictionary];
     if(self) {
-        NSNumber *dataSizeLengthNumber = dictionary[kIDXPropertyDataSizeLength];
-        NSAssert(dataSizeLengthNumber != nil, @"Index dictionary for %@ is missing %@ field", self.name, kIDXPropertyDataSizeLength);
+        NSNumber *dataSizeLengthNumber = dictionary[DSIndexFieldInfoKeyDataSizeLength];
+        NSAssert(dataSizeLengthNumber != nil, @"Index dictionary for %@ is missing %@ field", self.name, DSIndexFieldInfoKeyDataSizeLength);
 
         _dataSizeLength = dataSizeLengthNumber.unsignedIntegerValue;
     }

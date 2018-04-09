@@ -3,7 +3,8 @@
 // Public domain.
 
 #import <Foundation/Foundation.h>
-#import "DSCommon.h"
+#import "DSDefines.h"
+#import "DSConstants.h"
 #import "DSRecordTextElements.h"
 
 @class DSDictionary;
@@ -26,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly, copy) NSString *displayWord;  // tries desperately to return some non-null representative word for this record
 
-@property (nonatomic, readonly, nullable, copy) NSString *anchor;
+@property (nonatomic, readonly, nullable, copy) NSString *anchor;  // If this is a reference to part of another entry, this is an XPointer to that subentry. You can try to follow these with DSXPointer, if you're feeling adventurous.
 
 @property (nonatomic, readonly, strong) DSRecordTextElements *textElements;
 

@@ -13,17 +13,17 @@
 
 -(DSIndexName)name
 {
-    return (DSIndexName __nonnull)self[kIDXPropertyIndexName];
+    return (DSIndexName __nonnull)self[DSIndexInfoKeyName];
 }
 
 -(NSString *)path
 {
-    return (NSString * __nonnull)self[kIDXPropertyIndexPath];
+    return (NSString * __nonnull)self[DSIndexInfoKeyPath];
 }
 
 -(NSArray *)supportedSearchMethods
 {
-    return self[kIDXPropertyIndexKeyMatchingMethods] ?: @[];
+    return self[DSIndexInfoKeyKeyMatchingMethods] ?: @[];
 }
 
 -(BOOL)supportsSearchMethod:(DSSearchMethod)searchMethod
@@ -33,36 +33,37 @@
 
 -(BOOL)supportsFindByID
 {
-    return [self[kIDXPropertyIndexSupportDataID] boolValue];
+    return [self[DSIndexInfoKeySupportsDataID] boolValue];
 }
 
 -(BOOL)isBigEndian
 {
-    return [self[kIDXPropertyIndexBigEndian] boolValue];
+    return [self[DSIndexInfoKeyBigEndian] boolValue];
 }
 
 -(NSArray<DSIndexField *> *)fields
 {
     if(!_fields) {
-        NSDictionary *dataFieldsByKind = self[kIDXPropertyDataFields];
+        typedef NSDictionary<DSIndexFieldInfoKey, id> DSIndexFieldInfoDict;
+        NSDictionary<DSIndexInfoDataFieldsKey, NSArray<DSIndexFieldInfoDict *> *> *dataFieldsByKind = self[DSIndexInfoKeyDataFields];
 
-        NSArray *externalDataFieldDicts = dataFieldsByKind[kIDXPropertyExternalFields];
-        NSArray *fixedDataFieldDicts = dataFieldsByKind[kIDXPropertyFixedFields];
-        NSArray *variableDataFieldDicts = dataFieldsByKind[kIDXPropertyVariableFields];
+        NSArray<DSIndexFieldInfoDict *> *externalDataFieldDicts = dataFieldsByKind[DSIndexInfoDataFieldsKeyExternalFields];
+        NSArray<DSIndexFieldInfoDict *> *fixedDataFieldDicts = dataFieldsByKind[DSIndexInfoDataFieldsKeyFixedFields];
+        NSArray<DSIndexFieldInfoDict *> *variableDataFieldDicts = dataFieldsByKind[DSIndexInfoDataFieldsKeyVariableFields];
 
-        NSMutableArray *res = [NSMutableArray new];
+        NSMutableArray<DSIndexField *> *res = [NSMutableArray new];
 
-        for(NSDictionary *fieldDict in externalDataFieldDicts) {
+        for(DSIndexFieldInfoDict *fieldDict in externalDataFieldDicts) {
             DSExternalDataIndexField *field = [[DSExternalDataIndexField alloc] initWithInfoDictionary:fieldDict];
             [res addObject:field];
         }
 
-        for(NSDictionary *fieldDict in fixedDataFieldDicts) {
+        for(DSIndexFieldInfoDict *fieldDict in fixedDataFieldDicts) {
             DSFixedLengthIndexField *field = [[DSFixedLengthIndexField alloc] initWithInfoDictionary:fieldDict];
             [res addObject:field];
         }
 
-        for(NSDictionary *fieldDict in variableDataFieldDicts) {
+        for(DSIndexFieldInfoDict *fieldDict in variableDataFieldDicts) {
             DSVariableLengthIndexField *field = [[DSVariableLengthIndexField alloc] initWithInfoDictionary:fieldDict];
             [res addObject:field];
         }

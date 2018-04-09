@@ -8,9 +8,33 @@ framework module DictionaryServicesWrapper {
     }
 
     explicit module FrameworkBridging {
-        export Base
         export FrameworkInternals
         header "FrameworkBridging.h"
+    }
+
+    explicit module SyntheticRecord {
+        export FrameworkBridging
+        header "DSSyntheticRecord.h"
+    }
+
+    explicit module Experimental {
+        header "DSXPointer.h"
+        header "DSRecordBodyParser.h"
+        header "DSBetterReferenceIndex.h"
+        header "DSReverseKeywordIndex.h"
+        header "DSXMLDocumentCache.h"
+    }
+
+    explicit module XMLUtils {
+        header "DSXMLUtils.h"
+    }
+
+    explicit module MiscUtils {
+        header "DSMiscUtils.h"
+    }
+
+    explicit module NSDictionaryWrapperSubclassing {
+        header "DSMutableDictionaryWrapperUtils.h"
     }
 
     export Base

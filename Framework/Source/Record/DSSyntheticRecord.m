@@ -6,7 +6,8 @@
 #import "FrameworkInternals.h"
 #import "DSDictionary.h"
 #import "DSEnvironment.h"
-#import "NSXMLDocument+DSHelpers.h"
+#import "DSXMLUtils.h"
+#import "DSMiscUtils.h"
 
 
 @interface DSSyntheticRecord ()
@@ -41,14 +42,14 @@
 -(instancetype)initWithDictionary:(DSDictionary *)dictionary
                        indexEntry:(DSIndexEntry *)indexEntry
 {
-    uint64_t bodyDataID = indexEntry.externalBodyID;
+    DSBodyDataID bodyDataID = indexEntry.externalBodyID;
     NSAssert(bodyDataID != 0, @"Missing body ID for index entry");
 
     DSIndex *bodyDataIdx = dictionary.bodyDataIndex;
     NSAssert(bodyDataIdx != nil, @"Couldn't get body data index from dictionary");
 
     NSString *xmlString = [bodyDataIdx dataForRecordID:bodyDataID];
-    NSAssert(bodyDataIdx != nil, @"No entry for body data ID %llu in index", bodyDataID);
+    NSAssert(bodyDataIdx != nil, @"No entry for body data ID %@ in index", DSStringForBodyDataID(bodyDataID));
 
     self = [self initWithDictionary:dictionary indexEntry:indexEntry recordXMLString:xmlString];
     return self;
@@ -76,28 +77,39 @@
 }
 
 -(instancetype)initWithDictionary:(DSDictionary *)dictionary
-                       bodyDataID:(uint64_t)bodyDataID
+                       bodyDataID:(DSBodyDataID)bodyDataID
 {
     DSIndex *bodyIdx = dictionary.bodyDataIndex;
     NSString *xmlString = [bodyIdx dataForRecordID:bodyDataID];
 
-    NSAssert(xmlString != nil, @"No body data entry for id %llu", bodyDataID);
+    NSAssert(xmlString != nil, @"No body data entry for id %@", DSStringForBodyDataID(bodyDataID));
 
+    self = [self initWithDictionary:dictionary recordXMLString:xmlString];
+    return self;
+}
+
+-(instancetype)initWithDictionary:(DSDictionary *)dictionary recordXMLString:(NSString *)xmlString
+{
     NSError *xmlError = nil;
     NSXMLDocument *xmlDoc = [[NSXMLDocument alloc] initWithXMLString:xmlString options:NSXMLNodeOptionsNone error:&xmlError];
     NSAssert(xmlDoc != nil, @"Error parsing XML from body data: %@", xmlError);
 
-    DSRecordTextElements *textElements = [[DSRecordTextElements alloc] initWithXMLDocument:xmlDoc dictionary:dictionary];
+    self = [self initWithDictionary:dictionary recordXMLNoCopy:xmlDoc];
+    return self;
+}
 
+-(instancetype)initWithDictionary:(DSDictionary *)dictionary recordXMLNoCopy:(NSXMLDocument *)xmlDoc
+{
     self = [super initWithDictionary:dictionary];
     if(self) {
         // Just kind of making this up.
+        _textElements = [[DSRecordTextElements alloc] initWithXMLDocument:xmlDoc dictionary:dictionary];
 
-        _keyword = textElements.headword;
-        _headword = textElements.headword;
+        _keyword = _textElements.headword;
+        _headword = _textElements.headword;
         _rawHeadword = _headword;
         _supplementalHeadword = nil;
-        _title = textElements.title;
+        _title = _textElements.title;
         _anchor = nil;
         _bodyXML = xmlDoc;
     }
@@ -168,17 +180,22 @@
     NSXMLDocument *styleXSL = [DSEnvironment XSLDocumentForDefinitionStyle:style];
     NSXMLDocument *dictionaryXSL = self.dictionary.xslDocument;
 
-    NSMutableArray *xslStack = [NSMutableArray arrayWithObject:baseXSL];
-    if(dictionaryXSL) [xslStack addObject:dictionaryXSL];
-    if(styleXSL) [xslStack addObject:styleXSL];
+    NSArray *xslStack = DSArrayOfNonNilValues(baseXSL, dictionaryXSL, styleXSL);
 
 
-    NSString *titleForXSL = self.title.length == 0 ? self.headword : self.title;
-    DSDictionaryXSLArguments *xslArgs = self.dictionary.defaultXSLArguments;
-    [xslArgs setString:titleForXSL forKey:DSXSLArgumentKeyAriaLabel escape:YES];
-    if(style != DSDefinitionStylePlainText) [xslArgs setStylesheetContentPlaceholder];
+    NSXMLDocument *transformedDoc = nil;
 
-    NSXMLDocument *transformedDoc = [self.bodyXML ds_XMLDocumentByApplyingXSLs:xslStack arguments:xslArgs];
+    if(xslStack) {
+        NSString *titleForXSL = self.title.length == 0 ? self.headword : self.title;
+        DSDictionaryXSLArguments *xslArgs = self.dictionary.defaultXSLArguments;
+        [xslArgs setString:titleForXSL forKey:DSXSLArgumentKeyAriaLabel escape:YES];
+        if(style != DSDefinitionStylePlainText) [xslArgs setStylesheetContentPlaceholder];
+
+        transformedDoc = [self.bodyXML ds_XMLDocumentByApplyingXSLs:xslStack arguments:xslArgs];
+    }
+    else {
+        transformedDoc = self.bodyXML;
+    }
 
 
     if(style == DSDefinitionStylePlainText) {

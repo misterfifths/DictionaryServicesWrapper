@@ -3,7 +3,8 @@
 // Public domain.
 
 #import <Foundation/Foundation.h>
-#import "DSCommon.h"
+#import "DSDefines.h"
+#import "DSConstants.h"
 #import "DSIndexInfo.h"
 #import "DSIndexField.h"
 #import "DSIndexEntry.h"
@@ -19,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly, strong) DSIndexInfo *info;
 @property (nonatomic, readonly, copy) DSIndexName name;
-@property (nonatomic, readonly, strong) DSDictionary *dictionary;
+@property (nonatomic, readonly, weak) DSDictionary *dictionary;
 @property (nonatomic, readonly, copy) NSArray<DSIndexField *> *fields;
 @property (nonatomic, readonly) BOOL supportsFindByID;
 
@@ -57,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 // Making the somewhat reasonable assumption this is a string.
 // Only usable if supportsFindByID is YES.
--(nullable NSString *)dataForRecordID:(uint64_t)recordID DS_WARN_UNUSED_RESULT;
+-(nullable NSString *)dataForRecordID:(DSBodyDataID)recordID DS_WARN_UNUSED_RESULT;
 
 
 // TODO: definitely an argument to be made for subclasses of this:

@@ -2,7 +2,7 @@
 // 2018 / Tim Clem / github.com/misterfifths
 // Public domain.
 
-#import "DSCommon.h"
+#import "DSConstants.h"
 #import "FrameworkInternals.h"
 
 
@@ -37,21 +37,21 @@ DSXSLArgumentKey const DSXSLArgumentKeyStylesheetContent = @"stylesheet-content"
 
 NSUInteger DSUIntegerForSearchMethod(DSSearchMethod searchMethod)
 {
-    // The public DCS* methods want integer versions of these flags;
+    // The dictionary search methods want integer versions of these flags;
     // the IDX* methods want strings.
 
     #pragma clang diagnostic push
     #pragma clang diagnostic ignored "-Wdeprecated"
 
-    if([searchMethod isEqualToString:DSSearchMethodAllMatch]) return DCSSearchMethodPrefixMatch;
+    if([searchMethod isEqualToString:DSSearchMethodAllMatch]) return DCSDictionarySearchMethodPrefixMatch;
 
     #pragma clang diagnostic pop
 
-    if([searchMethod isEqualToString:DSSearchMethodPrefixMatch]) return DCSSearchMethodPrefixMatch;
-    if([searchMethod isEqualToString:DSSearchMethodCommonPrefixMatch]) return DCSSearchMethodPrefixMatch;
-    if([searchMethod isEqualToString:DSSearchMethodWildcardMatch]) return DCSSearchMethodWildcardMatch;
+    if([searchMethod isEqualToString:DSSearchMethodPrefixMatch]) return DCSDictionarySearchMethodPrefixMatch;
+    if([searchMethod isEqualToString:DSSearchMethodCommonPrefixMatch]) return DCSDictionarySearchMethodPrefixMatch;
+    if([searchMethod isEqualToString:DSSearchMethodWildcardMatch]) return DCSDictionarySearchMethodWildcardMatch;
 
-    return DCSSearchMethodExactMatch;
+    return DCSDictionarySearchMethodExactMatch;
 }
 
 NSDictionary<NSString *, DSTextElementKey> *DSOldNameToTextElementKeyMap()

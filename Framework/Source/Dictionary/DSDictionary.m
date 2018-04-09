@@ -367,8 +367,8 @@
 {
     NSArray *indexList = self.infoDictionary[kIDXPropertyIndexList];
 
-    for(NSDictionary *indexDict in indexList) {
-        NSString *name = indexDict[kIDXPropertyIndexName];
+    for(NSDictionary<DSIndexInfoKey, id> *indexDict in indexList) {
+        NSString *name = indexDict[DSIndexInfoKeyName];
         if([name isEqualToString:indexName]) {
             return [[DSIndexInfo alloc] initWithDictionary:indexDict];
         }
@@ -432,7 +432,7 @@
     NSAssert([[self infoForIndexNamed:DSIndexNameKeyword] supportsSearchMethod:searchMethod], @"Unsupported search method %@", searchMethod);
 
 
-    DCSSearchMethod dcsSearchMethod = DSUIntegerForSearchMethod(searchMethod);
+    DCSDictionarySearchMethod dcsSearchMethod = DSUIntegerForSearchMethod(searchMethod);
     NSArray *recordRefs = DCSCopyRecordsForSearchString(self.dictRef, string, dcsSearchMethod, maxResults);
 
     if(!recordRefs || recordRefs.count == 0) return @[];
@@ -477,7 +477,7 @@
 //    CFRelease(recordRef);
 
     DSIndex *refIdx = self.referenceIndex;
-    __block uint64_t bodyDataID = 0;
+    __block DSBodyDataID bodyDataID = 0;
     [refIdx enumerateMatchesForString:referenceString method:DSSearchMethodExactMatch usingBlock:^(DSIndexEntry *entry, BOOL *stop) {
         bodyDataID = entry.externalBodyID;
         *stop = YES;

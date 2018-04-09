@@ -15,8 +15,8 @@
 		BD1C2A57206DF7B800C821AC /* DSIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = BDDA4D8420605AAC00AF01B2 /* DSIndex.m */; };
 		BD1C2A58206DF7B800C821AC /* DSIndexField.h in Headers */ = {isa = PBXBuildFile; fileRef = BDDA4D862060668500AF01B2 /* DSIndexField.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BD1C2A59206DF7B800C821AC /* DSIndexField.m in Sources */ = {isa = PBXBuildFile; fileRef = BDDA4D872060668500AF01B2 /* DSIndexField.m */; };
-		BD1C2A5A206DF7B800C821AC /* DSCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = BDDA4D8A2060ADD700AF01B2 /* DSCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BD1C2A5B206DF7B800C821AC /* DSCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = BDDA4D8B2060ADD700AF01B2 /* DSCommon.m */; };
+		BD1C2A5A206DF7B800C821AC /* DSConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = BDDA4D8A2060ADD700AF01B2 /* DSConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD1C2A5B206DF7B800C821AC /* DSConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = BDDA4D8B2060ADD700AF01B2 /* DSConstants.m */; };
 		BD1C2A5C206DF7B800C821AC /* DSDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = BDDA4D902060B30800AF01B2 /* DSDictionary.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BD1C2A5D206DF7B800C821AC /* DSDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = BDDA4D912060B30800AF01B2 /* DSDictionary.m */; };
 		BD1C2A5E206DF7B800C821AC /* DSRecord.h in Headers */ = {isa = PBXBuildFile; fileRef = BDE6B7022062F0D0007F0419 /* DSRecord.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -36,9 +36,27 @@
 		BD1C2A6C206DF7B800C821AC /* DSDictionaryWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = BD1C2A39206CB87600C821AC /* DSDictionaryWrapper.m */; };
 		BD1C2A6D206DF7B800C821AC /* DSMutableDictionaryWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = BD1C2A3E206CCA3B00C821AC /* DSMutableDictionaryWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BD1C2A6E206DF7B800C821AC /* DSMutableDictionaryWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = BD1C2A3F206CCA3B00C821AC /* DSMutableDictionaryWrapper.m */; };
-		BD1C2A6F206DF7B800C821AC /* NSXMLDocument+DSHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = BD1C2A41206DD8EE00C821AC /* NSXMLDocument+DSHelpers.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		BD1C2A70206DF7B800C821AC /* NSXMLDocument+DSHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = BD1C2A42206DD8EE00C821AC /* NSXMLDocument+DSHelpers.m */; };
+		BD1C2A6F206DF7B800C821AC /* DSXMLUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = BD1C2A41206DD8EE00C821AC /* DSXMLUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD1C2A70206DF7B800C821AC /* DSXMLUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BD1C2A42206DD8EE00C821AC /* DSXMLUtils.m */; };
 		BD1CCD212071C8F700C5E5D8 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD1C2A74206DFAF000C821AC /* CoreServices.framework */; };
+		BD4627212078628900757D5E /* DSSyntheticRecord.h in Headers */ = {isa = PBXBuildFile; fileRef = BD4627202078615100757D5E /* DSSyntheticRecord.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD4627492079E5DC00757D5E /* DSSynthesizedIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = BD4627422079E5DB00757D5E /* DSSynthesizedIndex.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD46274A2079E5DC00757D5E /* DSSynthesizedIndexPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = BD4627432079E5DB00757D5E /* DSSynthesizedIndexPrivate.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		BD46274B2079E5DC00757D5E /* DSSynthesizedIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = BD4627442079E5DB00757D5E /* DSSynthesizedIndex.m */; };
+		BD46274C2079E5DC00757D5E /* DSReverseKeywordIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = BD4627452079E5DB00757D5E /* DSReverseKeywordIndex.m */; };
+		BD46274D2079E5DC00757D5E /* DSReverseKeywordIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = BD4627462079E5DB00757D5E /* DSReverseKeywordIndex.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD46274E2079E5DC00757D5E /* DSBetterReferenceIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = BD4627472079E5DC00757D5E /* DSBetterReferenceIndex.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD46274F2079E5DC00757D5E /* DSBetterReferenceIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = BD4627482079E5DC00757D5E /* DSBetterReferenceIndex.m */; };
+		BD4627522079E63700757D5E /* DSXPointer.m in Sources */ = {isa = PBXBuildFile; fileRef = BD4627502079E63600757D5E /* DSXPointer.m */; };
+		BD4627532079E64D00757D5E /* DSXPointer.h in Headers */ = {isa = PBXBuildFile; fileRef = BD4627512079E63600757D5E /* DSXPointer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD4627562079E77900757D5E /* DSMiscUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BD4627552079E77900757D5E /* DSMiscUtils.m */; };
+		BD4627572079E77E00757D5E /* DSMiscUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = BD4627542079E77900757D5E /* DSMiscUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD46275A2079E7CC00757D5E /* DSXMLDocumentCache.m in Sources */ = {isa = PBXBuildFile; fileRef = BD4627592079E7CB00757D5E /* DSXMLDocumentCache.m */; };
+		BD46275B2079E7D300757D5E /* DSXMLDocumentCache.h in Headers */ = {isa = PBXBuildFile; fileRef = BD4627582079E7CB00757D5E /* DSXMLDocumentCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD46275E2079E93A00757D5E /* DSRecordBodyParser.m in Sources */ = {isa = PBXBuildFile; fileRef = BD46275C2079E93A00757D5E /* DSRecordBodyParser.m */; };
+		BD46275F2079E93F00757D5E /* DSRecordBodyParser.h in Headers */ = {isa = PBXBuildFile; fileRef = BD46275D2079E93A00757D5E /* DSRecordBodyParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD4627612079E97D00757D5E /* DSMutableDictionaryWrapperUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = BD4627602079E97700757D5E /* DSMutableDictionaryWrapperUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD4627632079EE2900757D5E /* DSDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = BD4627622079EE1000757D5E /* DSDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BD4731D720729F0600BCEF0A /* FrameworkBridging.m in Sources */ = {isa = PBXBuildFile; fileRef = BD4731D320729F0600BCEF0A /* FrameworkBridging.m */; };
 		BD4731D820729F0600BCEF0A /* FrameworkBridging.h in Headers */ = {isa = PBXBuildFile; fileRef = BD4731D420729F0600BCEF0A /* FrameworkBridging.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BD4731D920729F0600BCEF0A /* FrameworkInternals.h in Headers */ = {isa = PBXBuildFile; fileRef = BD4731D520729F0600BCEF0A /* FrameworkInternals.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -64,10 +82,28 @@
 		BD1C2A3C206CC85700C821AC /* DSDictionaryXSLArguments.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DSDictionaryXSLArguments.m; sourceTree = "<group>"; };
 		BD1C2A3E206CCA3B00C821AC /* DSMutableDictionaryWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DSMutableDictionaryWrapper.h; sourceTree = "<group>"; };
 		BD1C2A3F206CCA3B00C821AC /* DSMutableDictionaryWrapper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DSMutableDictionaryWrapper.m; sourceTree = "<group>"; };
-		BD1C2A41206DD8EE00C821AC /* NSXMLDocument+DSHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSXMLDocument+DSHelpers.h"; sourceTree = "<group>"; };
-		BD1C2A42206DD8EE00C821AC /* NSXMLDocument+DSHelpers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSXMLDocument+DSHelpers.m"; sourceTree = "<group>"; };
+		BD1C2A41206DD8EE00C821AC /* DSXMLUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DSXMLUtils.h; sourceTree = "<group>"; };
+		BD1C2A42206DD8EE00C821AC /* DSXMLUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DSXMLUtils.m; sourceTree = "<group>"; };
 		BD1C2A4C206DF79500C821AC /* DictionaryServicesWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DictionaryServicesWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD1C2A74206DFAF000C821AC /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		BD4627202078615100757D5E /* DSSyntheticRecord.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DSSyntheticRecord.h; sourceTree = "<group>"; };
+		BD4627422079E5DB00757D5E /* DSSynthesizedIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSSynthesizedIndex.h; sourceTree = "<group>"; };
+		BD4627432079E5DB00757D5E /* DSSynthesizedIndexPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSSynthesizedIndexPrivate.h; sourceTree = "<group>"; };
+		BD4627442079E5DB00757D5E /* DSSynthesizedIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSSynthesizedIndex.m; sourceTree = "<group>"; };
+		BD4627452079E5DB00757D5E /* DSReverseKeywordIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSReverseKeywordIndex.m; sourceTree = "<group>"; };
+		BD4627462079E5DB00757D5E /* DSReverseKeywordIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSReverseKeywordIndex.h; sourceTree = "<group>"; };
+		BD4627472079E5DC00757D5E /* DSBetterReferenceIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSBetterReferenceIndex.h; sourceTree = "<group>"; };
+		BD4627482079E5DC00757D5E /* DSBetterReferenceIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSBetterReferenceIndex.m; sourceTree = "<group>"; };
+		BD4627502079E63600757D5E /* DSXPointer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DSXPointer.m; sourceTree = "<group>"; };
+		BD4627512079E63600757D5E /* DSXPointer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DSXPointer.h; sourceTree = "<group>"; };
+		BD4627542079E77900757D5E /* DSMiscUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DSMiscUtils.h; sourceTree = "<group>"; };
+		BD4627552079E77900757D5E /* DSMiscUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DSMiscUtils.m; sourceTree = "<group>"; };
+		BD4627582079E7CB00757D5E /* DSXMLDocumentCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DSXMLDocumentCache.h; sourceTree = "<group>"; };
+		BD4627592079E7CB00757D5E /* DSXMLDocumentCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DSXMLDocumentCache.m; sourceTree = "<group>"; };
+		BD46275C2079E93A00757D5E /* DSRecordBodyParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DSRecordBodyParser.m; sourceTree = "<group>"; };
+		BD46275D2079E93A00757D5E /* DSRecordBodyParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DSRecordBodyParser.h; sourceTree = "<group>"; };
+		BD4627602079E97700757D5E /* DSMutableDictionaryWrapperUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DSMutableDictionaryWrapperUtils.h; sourceTree = "<group>"; };
+		BD4627622079EE1000757D5E /* DSDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DSDefines.h; sourceTree = "<group>"; };
 		BD4731D320729F0600BCEF0A /* FrameworkBridging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FrameworkBridging.m; sourceTree = "<group>"; };
 		BD4731D420729F0600BCEF0A /* FrameworkBridging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FrameworkBridging.h; sourceTree = "<group>"; };
 		BD4731D520729F0600BCEF0A /* FrameworkInternals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FrameworkInternals.h; sourceTree = "<group>"; };
@@ -84,8 +120,8 @@
 		BDDA4D8420605AAC00AF01B2 /* DSIndex.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DSIndex.m; sourceTree = "<group>"; };
 		BDDA4D862060668500AF01B2 /* DSIndexField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DSIndexField.h; sourceTree = "<group>"; };
 		BDDA4D872060668500AF01B2 /* DSIndexField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DSIndexField.m; sourceTree = "<group>"; };
-		BDDA4D8A2060ADD700AF01B2 /* DSCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DSCommon.h; sourceTree = "<group>"; };
-		BDDA4D8B2060ADD700AF01B2 /* DSCommon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DSCommon.m; sourceTree = "<group>"; };
+		BDDA4D8A2060ADD700AF01B2 /* DSConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DSConstants.h; sourceTree = "<group>"; };
+		BDDA4D8B2060ADD700AF01B2 /* DSConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DSConstants.m; sourceTree = "<group>"; };
 		BDDA4D902060B30800AF01B2 /* DSDictionary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DSDictionary.h; sourceTree = "<group>"; };
 		BDDA4D912060B30800AF01B2 /* DSDictionary.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DSDictionary.m; sourceTree = "<group>"; };
 		BDDE1A54206494D600E0D8EC /* DSSyntheticRecord.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DSSyntheticRecord.m; sourceTree = "<group>"; };
@@ -118,10 +154,25 @@
 				BDBA00D620701B1500730A55 /* Dictionary */,
 				BDBA00D420701A9600730A55 /* Record */,
 				BDBA00D320701A8E00730A55 /* Index */,
+				BD4627412079E4CB00757D5E /* SynthesizedIndex */,
 				BDBA00D520701ACE00730A55 /* Utility */,
 			);
 			name = DictionaryServicesWrapper;
 			path = Source;
+			sourceTree = "<group>";
+		};
+		BD4627412079E4CB00757D5E /* SynthesizedIndex */ = {
+			isa = PBXGroup;
+			children = (
+				BD4627422079E5DB00757D5E /* DSSynthesizedIndex.h */,
+				BD4627432079E5DB00757D5E /* DSSynthesizedIndexPrivate.h */,
+				BD4627442079E5DB00757D5E /* DSSynthesizedIndex.m */,
+				BD4627472079E5DC00757D5E /* DSBetterReferenceIndex.h */,
+				BD4627482079E5DC00757D5E /* DSBetterReferenceIndex.m */,
+				BD4627462079E5DB00757D5E /* DSReverseKeywordIndex.h */,
+				BD4627452079E5DB00757D5E /* DSReverseKeywordIndex.m */,
+			);
+			path = SynthesizedIndex;
 			sourceTree = "<group>";
 		};
 		BD4731DE20729F8700BCEF0A /* Metadata */ = {
@@ -173,9 +224,14 @@
 				BDE6B7032062F0D0007F0419 /* DSRecord.m */,
 				BDE6B7052062F520007F0419 /* DSRecordPrivate.h */,
 				BDE6B7062062F7E1007F0419 /* DSConcreteRecord.m */,
+				BD4627202078615100757D5E /* DSSyntheticRecord.h */,
 				BDDE1A54206494D600E0D8EC /* DSSyntheticRecord.m */,
 				BD1C2A35206CB83A00C821AC /* DSRecordTextElements.h */,
 				BD1C2A36206CB83A00C821AC /* DSRecordTextElements.m */,
+				BD4627512079E63600757D5E /* DSXPointer.h */,
+				BD4627502079E63600757D5E /* DSXPointer.m */,
+				BD46275D2079E93A00757D5E /* DSRecordBodyParser.h */,
+				BD46275C2079E93A00757D5E /* DSRecordBodyParser.m */,
 			);
 			path = Record;
 			sourceTree = "<group>";
@@ -187,12 +243,15 @@
 				BD1C2A39206CB87600C821AC /* DSDictionaryWrapper.m */,
 				BD1C2A3E206CCA3B00C821AC /* DSMutableDictionaryWrapper.h */,
 				BD1C2A3F206CCA3B00C821AC /* DSMutableDictionaryWrapper.m */,
-				BD1C2A41206DD8EE00C821AC /* NSXMLDocument+DSHelpers.h */,
-				BD1C2A42206DD8EE00C821AC /* NSXMLDocument+DSHelpers.m */,
+				BD4627602079E97700757D5E /* DSMutableDictionaryWrapperUtils.h */,
+				BD1C2A41206DD8EE00C821AC /* DSXMLUtils.h */,
+				BD1C2A42206DD8EE00C821AC /* DSXMLUtils.m */,
 				BD0F8A0E206F4E7F00956FDF /* NSLocale+DSHelpers.h */,
 				BD0F8A0F206F4E7F00956FDF /* NSLocale+DSHelpers.m */,
 				BD98255B207289AC0074F8A1 /* NSString+DSHelpers.h */,
 				BD98255C207289AC0074F8A1 /* NSString+DSHelpers.m */,
+				BD4627542079E77900757D5E /* DSMiscUtils.h */,
+				BD4627552079E77900757D5E /* DSMiscUtils.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -206,6 +265,8 @@
 				BD1C2A3C206CC85700C821AC /* DSDictionaryXSLArguments.m */,
 				BD0F8A0A206F4E6800956FDF /* DSContentLanguagePair.h */,
 				BD0F8A0B206F4E6800956FDF /* DSContentLanguagePair.m */,
+				BD4627582079E7CB00757D5E /* DSXMLDocumentCache.h */,
+				BD4627592079E7CB00757D5E /* DSXMLDocumentCache.m */,
 			);
 			path = Dictionary;
 			sourceTree = "<group>";
@@ -213,8 +274,9 @@
 		BDBA00D720701B4000730A55 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				BDDA4D8A2060ADD700AF01B2 /* DSCommon.h */,
-				BDDA4D8B2060ADD700AF01B2 /* DSCommon.m */,
+				BD4627622079EE1000757D5E /* DSDefines.h */,
+				BDDA4D8A2060ADD700AF01B2 /* DSConstants.h */,
+				BDDA4D8B2060ADD700AF01B2 /* DSConstants.m */,
 				BD56A2492069577100D3B748 /* DSEnvironment.h */,
 				BD56A24A2069577100D3B748 /* DSEnvironment.m */,
 			);
@@ -237,24 +299,35 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD4731DA20729F0600BCEF0A /* DictionaryServicesWrapper.h in Headers */,
-				BD1C2A6F206DF7B800C821AC /* NSXMLDocument+DSHelpers.h in Headers */,
+				BD1C2A6F206DF7B800C821AC /* DSXMLUtils.h in Headers */,
+				BD4627612079E97D00757D5E /* DSMutableDictionaryWrapperUtils.h in Headers */,
 				BD1C2A63206DF7B800C821AC /* DSEnvironment.h in Headers */,
 				BD1C2A60206DF7B800C821AC /* DSRecordPrivate.h in Headers */,
+				BD4627212078628900757D5E /* DSSyntheticRecord.h in Headers */,
 				BD1C2A67206DF7B800C821AC /* DSRecordTextElements.h in Headers */,
+				BD4627572079E77E00757D5E /* DSMiscUtils.h in Headers */,
 				BD1C2A56206DF7B800C821AC /* DSIndex.h in Headers */,
 				BD1C2A65206DF7B800C821AC /* DSIndexEntry.h in Headers */,
 				BD1C2A5C206DF7B800C821AC /* DSDictionary.h in Headers */,
+				BD46274A2079E5DC00757D5E /* DSSynthesizedIndexPrivate.h in Headers */,
+				BD46275F2079E93F00757D5E /* DSRecordBodyParser.h in Headers */,
 				BD1C2A69206DF7B800C821AC /* DSDictionaryXSLArguments.h in Headers */,
 				BD1C2A6D206DF7B800C821AC /* DSMutableDictionaryWrapper.h in Headers */,
+				BD46275B2079E7D300757D5E /* DSXMLDocumentCache.h in Headers */,
+				BD4627492079E5DC00757D5E /* DSSynthesizedIndex.h in Headers */,
+				BD46274D2079E5DC00757D5E /* DSReverseKeywordIndex.h in Headers */,
 				BD0F8A10206F4E7F00956FDF /* NSLocale+DSHelpers.h in Headers */,
+				BD4627632079EE2900757D5E /* DSDefines.h in Headers */,
 				BD1C2A6B206DF7B800C821AC /* DSDictionaryWrapper.h in Headers */,
+				BD4627532079E64D00757D5E /* DSXPointer.h in Headers */,
 				BD1C2A5E206DF7B800C821AC /* DSRecord.h in Headers */,
 				BD4731D920729F0600BCEF0A /* FrameworkInternals.h in Headers */,
 				BD1C2A58206DF7B800C821AC /* DSIndexField.h in Headers */,
 				BD98255D207289AC0074F8A1 /* NSString+DSHelpers.h in Headers */,
 				BDBA00DD2070547700730A55 /* DSIndexInfo.h in Headers */,
 				BD4731D820729F0600BCEF0A /* FrameworkBridging.h in Headers */,
-				BD1C2A5A206DF7B800C821AC /* DSCommon.h in Headers */,
+				BD46274E2079E5DC00757D5E /* DSBetterReferenceIndex.h in Headers */,
+				BD1C2A5A206DF7B800C821AC /* DSConstants.h in Headers */,
 				BD0F8A0C206F4E6800956FDF /* DSContentLanguagePair.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -331,22 +404,29 @@
 			files = (
 				BD1C2A59206DF7B800C821AC /* DSIndexField.m in Sources */,
 				BD1C2A6E206DF7B800C821AC /* DSMutableDictionaryWrapper.m in Sources */,
+				BD46275A2079E7CC00757D5E /* DSXMLDocumentCache.m in Sources */,
+				BD4627522079E63700757D5E /* DSXPointer.m in Sources */,
 				BD4731D720729F0600BCEF0A /* FrameworkBridging.m in Sources */,
-				BD1C2A5B206DF7B800C821AC /* DSCommon.m in Sources */,
+				BD1C2A5B206DF7B800C821AC /* DSConstants.m in Sources */,
+				BD46275E2079E93A00757D5E /* DSRecordBodyParser.m in Sources */,
+				BD46274B2079E5DC00757D5E /* DSSynthesizedIndex.m in Sources */,
 				BD0F8A0D206F4E6800956FDF /* DSContentLanguagePair.m in Sources */,
 				BD1C2A61206DF7B800C821AC /* DSConcreteRecord.m in Sources */,
 				BD0F8A11206F4E7F00956FDF /* NSLocale+DSHelpers.m in Sources */,
 				BD1C2A6A206DF7B800C821AC /* DSDictionaryXSLArguments.m in Sources */,
 				BD1C2A66206DF7B800C821AC /* DSIndexEntry.m in Sources */,
 				BD1C2A5D206DF7B800C821AC /* DSDictionary.m in Sources */,
+				BD4627562079E77900757D5E /* DSMiscUtils.m in Sources */,
 				BD98255E207289AC0074F8A1 /* NSString+DSHelpers.m in Sources */,
 				BD1C2A68206DF7B800C821AC /* DSRecordTextElements.m in Sources */,
 				BD1C2A5F206DF7B800C821AC /* DSRecord.m in Sources */,
 				BDBA00DE2070547700730A55 /* DSIndexInfo.m in Sources */,
 				BD1C2A62206DF7B800C821AC /* DSSyntheticRecord.m in Sources */,
+				BD46274C2079E5DC00757D5E /* DSReverseKeywordIndex.m in Sources */,
 				BD1C2A64206DF7B800C821AC /* DSEnvironment.m in Sources */,
 				BD1C2A6C206DF7B800C821AC /* DSDictionaryWrapper.m in Sources */,
-				BD1C2A70206DF7B800C821AC /* NSXMLDocument+DSHelpers.m in Sources */,
+				BD46274F2079E5DC00757D5E /* DSBetterReferenceIndex.m in Sources */,
+				BD1C2A70206DF7B800C821AC /* DSXMLUtils.m in Sources */,
 				BD1C2A57206DF7B800C821AC /* DSIndex.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -393,6 +473,7 @@
 					"-Wno-objc-missing-property-synthesis",
 					"-Wno-direct-ivar-access",
 					"-Wno-gnu-conditional-omitted-operand",
+					"-Wno-gnu-zero-variadic-macro-arguments",
 				);
 			};
 			name = Debug;

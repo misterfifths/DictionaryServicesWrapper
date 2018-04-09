@@ -2,15 +2,14 @@
 // 2018 / Tim Clem / github.com/misterfifths
 // Public domain.
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 
-//! Project version number for DictionaryServicesWrapper.
+
 FOUNDATION_EXPORT double DictionaryServicesWrapperVersionNumber;
-
-//! Project version string for DictionaryServicesWrapper.
 FOUNDATION_EXPORT const unsigned char DictionaryServicesWrapperVersionString[];
 
-#import "DSCommon.h"
+
+#import "DSConstants.h"
 #import "DSEnvironment.h"
 
 #import "DSDictionary.h"

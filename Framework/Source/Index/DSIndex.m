@@ -20,7 +20,7 @@ static const size_t DSIndexSearchDefaultRecordBatchLimit = 1000;
 
 @property (nonatomic) IDXIndexRef indexRef;
 
-@property (nonatomic, readwrite, strong) DSDictionary *dictionary;
+@property (nonatomic, readwrite, weak) DSDictionary *dictionary;
 
 @property (nonatomic, readwrite, strong) DSIndexInfo *info;
 
@@ -169,7 +169,9 @@ static const size_t DSIndexSearchDefaultRecordBatchLimit = 1000;
                           method:(DSSearchMethod)searchMethod
                       usingBlock:(void (^)(DSIndexEntry *, BOOL *))block
 {
-    [self enumerateMatchesForNormalizedString:[self.dictionary stringByNormalizingSearchTerm:string]
+    NSString *normalizedSearchString = [self.dictionary stringByNormalizingSearchTerm:string];
+
+    [self enumerateMatchesForNormalizedString:normalizedSearchString
                                        method:searchMethod
                                    usingBlock:block];
 }
@@ -259,7 +261,7 @@ static const size_t DSIndexSearchDefaultRecordBatchLimit = 1000;
     return entry;
 }
 
--(NSString *)dataForRecordID:(uint64_t)recordID
+-(NSString *)dataForRecordID:(DSBodyDataID)recordID
 {
     NSAssert(self.supportsFindByID, @"Index %@ does not support find by ID", self.name);
 

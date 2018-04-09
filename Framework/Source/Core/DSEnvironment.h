@@ -3,7 +3,8 @@
 // Public domain.
 
 #import <Foundation/Foundation.h>
-#import "DSCommon.h"
+#import "DSDefines.h"
+#import "DSConstants.h"
 
 
 NS_ASSUME_NONNULL_BEGIN

@@ -3,7 +3,8 @@
 // Public domain.
 
 #import "DSIndexEntry.h"
-#import "DSCommon.h"
+#import "DSMutableDictionaryWrapperUtils.h"
+#import "DSMiscUtils.h"
 
 
 @implementation DSIndexEntry
@@ -27,14 +28,14 @@
     return keySet;
 }
 
--(uint64_t)externalBodyID
+-(DSBodyDataID)externalBodyID
 {
-    return [self[DSIndexFieldNameExternalBodyID] unsignedLongLongValue];
+    return DSBodyDataIDFromNumber(self[DSIndexFieldNameExternalBodyID]);
 }
 
--(void)setExternalBodyID:(uint64_t)externalBodyID
+-(void)setExternalBodyID:(DSBodyDataID)externalBodyID
 {
-    self[DSIndexFieldNameExternalBodyID] = @(externalBodyID);
+    self[DSIndexFieldNameExternalBodyID] = DSNumberForBodyDataID(externalBodyID);
 }
 
 -(uint64_t)privateFlag
@@ -68,130 +69,18 @@
     self.privateFlag |= priority & DSIndexFieldPrivateFlagBitmaskPriority;
 }
 
--(NSString *)keyword
-{
-    return self[DSIndexFieldNameKeyword];
-}
+DS_MDW_StringPropertyImpl(keyword, setKeyword, DSIndexFieldNameKeyword);
+DS_MDW_StringPropertyImpl(headword, setHeadword, DSIndexFieldNameHeadword);
+DS_MDW_StringPropertyImpl(entryTitle, setEntryTitle, DSIndexFieldNameEntryTitle);
+DS_MDW_StringPropertyImpl(anchor, setAnchor, DSIndexFieldNameAnchor);
+DS_MDW_StringPropertyImpl(yomiWord, setYomiWord, DSIndexFieldNameYomiWord);
+DS_MDW_StringPropertyImpl(supplementalHeadword, setSupplementalHeadword, DSIndexFieldNameYomiWord);  // sic
+DS_MDW_StringPropertyImpl(sortKey, setSortKey, DSIndexFieldNameSortKey);
 
--(void)setKeyword:(NSString *)keyword
-{
-    self[DSIndexFieldNameKeyword] = [keyword copy];
-}
-
--(NSString *)headword
-{
-    return self[DSIndexFieldNameHeadword];
-}
-
--(void)setHeadword:(NSString *)headword
-{
-    self[DSIndexFieldNameHeadword] = [headword copy];
-}
-
--(NSString *)entryTitle
-{
-    return self[DSIndexFieldNameEntryTitle];
-}
-
--(void)setEntryTitle:(NSString *)entryTitle
-{
-    self[DSIndexFieldNameEntryTitle] = [entryTitle copy];
-}
-
--(NSString *)anchor
-{
-    return self[DSIndexFieldNameAnchor];
-}
-
--(void)setAnchor:(NSString *)anchor
-{
-    self[DSIndexFieldNameAnchor] = [anchor copy];
-}
-
--(NSString *)yomiWord
-{
-    return self[DSIndexFieldNameYomiWord];
-}
-
--(void)setYomiWord:(NSString *)yomiWord
-{
-    self[DSIndexFieldNameYomiWord] = [yomiWord copy];
-}
-
--(NSString *)supplementalHeadword
-{
-    return self.yomiWord;
-}
-
--(void)setSupplementalHeadword:(NSString *)supplementalHeadword
-{
-    self.yomiWord = supplementalHeadword;
-}
-
--(NSString *)sortKey
-{
-    return self[DSIndexFieldNameSortKey];
-}
-
--(void)setSortKey:(NSString *)sortKey
-{
-    self[DSIndexFieldNameSortKey] = sortKey;
-}
-
--(NSString *)firstNonemptyValueForKeys:(NSArray *)keys
-{
-    for(id key in keys) {
-        NSString *value = self[key];
-        if(!value) continue;
-        if(![value isKindOfClass:[NSString class]]) continue;
-        if(value.length == 0) continue;
-
-        return value;
-    }
-
-    return nil;
-}
 
 -(NSString *)displayWord
 {
-    return [self firstNonemptyValueForKeys:@[ DSIndexFieldNameEntryTitle,
-                                              DSIndexFieldNameHeadword,
-                                              DSIndexFieldNameYomiWord,
-                                              DSIndexFieldNameKeyword ]];
-}
-
--(void)mergeIndexEntry:(DSIndexEntry *)other
-{
-    for(DSIndexFieldName key in other) {
-        id ourValue = self[key];
-        id theirValue = other[key];
-
-        // We don't have it; copy it over unless it's an empty string
-        if(!ourValue) {
-            if([theirValue isKindOfClass:[NSString class]] && [theirValue length] == 0)
-                continue;
-
-            self[key] = theirValue;
-            continue;
-        }
-
-        // The values are equal; move on
-        if([ourValue isEqual:theirValue])
-            continue;
-
-        // Empty string here; they win
-        if([ourValue isKindOfClass:[NSString class]] && [ourValue length] == 0) {
-            self[key] = theirValue;
-            continue;
-        }
-
-        // Their value is empty; it loses
-        // if([theirValue isKindOfClass:[NSString class]] && [theirValue length] == 0)
-        //    continue;
-
-        // Conflict.
-        // Alas.
-    }
+    return DSFirstNonEmptyString(self.entryTitle, self.headword, self.supplementalHeadword, self.keyword);
 }
 
 -(NSString *)description
@@ -212,7 +101,7 @@
         }
 
         if(contentDesc.length == 0 && self.externalBodyID) {
-            [contentDesc appendFormat:@"%@bodyID=0x%llx", spacer, self.externalBodyID];
+            [contentDesc appendFormat:@"%@bodyID=%@", spacer, DSStringForBodyDataID(self.externalBodyID)];
             --extraFieldCount;
             spacer = @" ";
         }

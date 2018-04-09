@@ -3,7 +3,8 @@
 // Public domain.
 
 #import <Foundation/Foundation.h>
-#import "DSCommon.h"
+#import "DSDefines.h"
+#import "DSConstants.h"
 #import "DSIndex.h"
 #import "DSRecord.h"
 #import "DSDictionaryXSLArguments.h"
@@ -15,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 // Presently unsupported things: subdictionaries, front matter, almost certainly the Wikipedia dictionary,
 // probably bits and pieces of non-NOAD dictionaries.
-// Big-endian indexes are probably busted. Couldn't find one to test.
+// Big-endian indexes are probably busted. Haven't tested at all.
 // Seems like certain dictionaries have RTF content, not XML? That'll definitely break.
 
 
@@ -65,7 +66,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 // The recordsMatchingString methods do this automatically; only needed if manually searching against
 // an index. Normalizes the string using -primaryLocale.
--(NSString *)stringByNormalizingSearchTerm:(NSString *)searchTerm;
+-(NSString *)stringByNormalizingSearchTerm:(NSString *)searchTerm DS_WARN_UNUSED_RESULT;
 
 
 #pragma mark - Record synthesis

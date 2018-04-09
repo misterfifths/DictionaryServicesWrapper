@@ -4,17 +4,21 @@
 
 #import <Foundation/Foundation.h>
 #import "DSMutableDictionaryWrapper.h"
-#import "DSCommon.h"
+#import "DSDefines.h"
+#import "DSConstants.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
 
 
+NS_SWIFT_NAME(DSIndex.Entry)
 @interface DSIndexEntry : DSMutableDictionaryWrapper<DSIndexFieldName, id>
 
-@property (nonatomic) uint64_t externalBodyID;
+@property (nonatomic) DSBodyDataID externalBodyID;
 
 @property (nonatomic) uint64_t privateFlag;
+
+// These two are computed via bitmasks from the privateFlag
 @property (nonatomic, getter=isCensored) BOOL censored;
 @property (nonatomic) uint8_t priority;
 
@@ -27,12 +31,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable) NSString *sortKey;
 
 @property (nonatomic, readonly, copy, nullable) NSString *displayWord;  // first non-null/non-empty of title, headword, yomi, keyword, in that order
-
-
-// Copies fields from the other index entry into this one.
-// If a key in other is already present here, our value is overwritten if the value in other is a nonempty string.
-// Otherwise, in conflict, our value wins.
--(void)mergeIndexEntry:(DSIndexEntry *)other;
 
 @end
 
