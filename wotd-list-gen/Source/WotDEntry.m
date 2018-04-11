@@ -3,7 +3,6 @@
 
 #import "WotDEntry.h"
 @import DictionaryServicesWrapper.Experimental;
-@import DictionaryServicesWrapper.NSDictionaryWrapperSubclassing;
 @import DictionaryServicesWrapper.MiscUtils;
 
 
@@ -16,6 +15,13 @@ WotDEntryKey WotDEntryKeySense = @"DCSWotDEntrySense";
 
 
 @implementation WotDEntry
+
+DS_MDW_SharedKeySetImpl(WotDEntryKeyHeadword,
+                        WotDEntryKeyEntryID,
+                        WotDEntryKeyPOS,
+                        WotDEntryKeySecondaryHeadword,
+                        WotDEntryKeyPronunciation,
+                        WotDEntryKeySense);
 
 DS_MDW_StringPropertyImpl(headword, setHeadword, WotDEntryKeyHeadword);
 DS_MDW_StringPropertyImpl(referenceID, setReferenceID, WotDEntryKeyEntryID);

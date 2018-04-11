@@ -4,7 +4,7 @@
 #import <Foundation/Foundation.h>
 @import DictionaryServicesWrapper;
 @import DictionaryServicesWrapper.Experimental;
-@import DictionaryServicesWrapper.SyntheticRecord;
+@import DictionaryServicesWrapper.RecordSynthesis;
 @import DictionaryServicesWrapper.MiscUtils;
 #import "WotDEntry.h"
 

@@ -3,6 +3,7 @@
 
 #import <Foundation/Foundation.h>
 @import DictionaryServicesWrapper;
+@import DictionaryServicesWrapper.NSDictionaryWrapperSubclassing;
 
 @class DSRecordSubEntry;
 
