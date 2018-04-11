@@ -30,7 +30,9 @@
 
 -(DSBodyDataID)externalBodyID
 {
-    return DSBodyDataIDFromNumber(self[DSIndexFieldNameExternalBodyID]);
+    NSNumber *num = self[DSIndexFieldNameExternalBodyID];
+    if(num == nil) return 0;
+    return DSBodyDataIDFromNumber(num);
 }
 
 -(void)setExternalBodyID:(DSBodyDataID)externalBodyID

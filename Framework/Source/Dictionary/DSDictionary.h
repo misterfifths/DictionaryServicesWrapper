@@ -7,8 +7,9 @@
 #import "DSConstants.h"
 #import "DSIndex.h"
 #import "DSRecord.h"
-#import "DSDictionaryXSLArguments.h"
 #import "DSContentLanguagePair.h"
+
+@class DSXSLArguments;
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -30,9 +31,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 @property (nonatomic, readonly, copy) NSString *name;
-@property (nonatomic, readonly, copy) NSString *shortName;
+@property (nonatomic, readonly, copy) NSString *shortName;  // never nil, but intermittently empty
 @property (nonatomic, readonly, copy) NSString *identifier;
-@property (nonatomic, readonly, strong) NSURL *URL;
+@property (nonatomic, readonly, strong, nullable) NSURL *URL;  // nil if this dictionary isn't downloaded (i.e., an instance gotten through +availableDictionaries)
 @property (nonatomic, readonly) BOOL isNetworkDictionary;
 
 @property (nonatomic, readonly, copy) NSArray<DSContentLanguagePair *> *contentLanguages;
@@ -83,7 +84,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, copy) NSDictionary<NSString *, NSString *> *defaultPreferences;
 @property (nonatomic, readonly, copy) NSDictionary<NSString *, NSString *> *preferences;
 
-@property (nonatomic, readonly, copy) DSDictionaryXSLArguments *defaultXSLArguments;
+@property (nonatomic, readonly, copy) DSXSLArguments *defaultXSLArguments;
 
 // Looks up the given string in the referenceIndex (to translate it to a body data ID),
 // then looks up its body in the bodyDataIndex, and recovers a record out of that.

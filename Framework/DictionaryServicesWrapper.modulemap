@@ -12,9 +12,10 @@ framework module DictionaryServicesWrapper {
         header "FrameworkBridging.h"
     }
 
-    explicit module SyntheticRecord {
+    explicit module RecordSynthesis {
         export FrameworkBridging
         header "DSSyntheticRecord.h"
+        header "DSXSLArguments.h"
     }
 
     explicit module Experimental {
@@ -34,6 +35,8 @@ framework module DictionaryServicesWrapper {
     }
 
     explicit module NSDictionaryWrapperSubclassing {
+        header "DSDictionaryWrapper.h"
+        header "DSMutableDictionaryWrapper.h"
         header "DSMutableDictionaryWrapperUtils.h"
     }
 

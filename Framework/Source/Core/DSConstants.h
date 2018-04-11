@@ -15,13 +15,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 
-typedef NSString *DSIndexName NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(DSIndex.WellKnownName);
+typedef NSString *DSIndexName NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(DSIndex.Name);
 extern DSIndexName const DSIndexNameKeyword;
 extern DSIndexName const DSIndexNameBodyData;
 extern DSIndexName const DSIndexNameReference;
 
 
-typedef NSString *DSIndexInfoKey NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(DSIndexInfo.WellKnownKey);
+typedef NSString *DSIndexInfoKey NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(DSIndexInfo.Key);
 DSExternAlias(DSIndexInfoKey const, DSIndexInfoKeyName, kIDXPropertyIndexName);
 DSExternAlias(DSIndexInfoKey const, DSIndexInfoKeyPath, kIDXPropertyIndexPath);
 DSExternAlias(DSIndexInfoKey const, DSIndexInfoKeyAccessMethod, kIDXPropertyIndexAccessMethod);
@@ -32,19 +32,19 @@ DSExternAlias(DSIndexInfoKey const, DSIndexInfoKeySupportsDataID, kIDXPropertyIn
 DSExternAlias(DSIndexInfoKey const, DSIndexInfoKeyBigEndian, kIDXPropertyIndexBigEndian);
 DSExternAlias(DSIndexInfoKey const, DSIndexInfoKeyDataFields, kIDXPropertyDataFields);
 
-typedef NSString *DSIndexInfoDataFieldsKey NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(DSIndexInfo.WellKnownDataFieldsKey);
+typedef NSString *DSIndexInfoDataFieldsKey NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(DSIndexInfo.DataFieldsKey);
 DSExternAlias(DSIndexInfoDataFieldsKey const, DSIndexInfoDataFieldsKeyExternalFields, kIDXPropertyExternalFields);
 DSExternAlias(DSIndexInfoDataFieldsKey const, DSIndexInfoDataFieldsKeyFixedFields, kIDXPropertyFixedFields);
 DSExternAlias(DSIndexInfoDataFieldsKey const, DSIndexInfoDataFieldsKeyVariableFields, kIDXPropertyVariableFields);
 
-typedef NSString *DSIndexFieldInfoKey NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(DSIndexField.WellKnownInfoKey);
+typedef NSString *DSIndexFieldInfoKey NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(DSIndexField.InfoKey);
 DSExternAlias(DSIndexFieldInfoKey const, DSIndexFieldInfoKeyName, kIDXPropertyDataFieldName);
 DSExternAlias(DSIndexFieldInfoKey const, DSIndexFieldInfoKeyExternalIndexName, kIDXPropertyIndexName);  // sic
 DSExternAlias(DSIndexFieldInfoKey const, DSIndexFieldInfoKeyDataSize, kIDXPropertyDataSize);
 DSExternAlias(DSIndexFieldInfoKey const, DSIndexFieldInfoKeyDataSizeLength, kIDXPropertyDataSizeLength);
 
 
-typedef NSString *DSIndexFieldName NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(DSIndexField.WellKnownName);
+typedef NSString *DSIndexFieldName NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(DSIndexField.Name);
 extern DSIndexFieldName const DSIndexFieldNameExternalBodyID;
 extern DSIndexFieldName const DSIndexFieldNamePrivateFlag;
 extern DSIndexFieldName const DSIndexFieldNameKeyword;
@@ -71,7 +71,7 @@ typedef NS_ENUM(NSUInteger, DSDefinitionStyle) {
 
 // The value for all of these is an NSString, with the exception of DSTextElementKeySenses,
 // which is an array of strings.
-typedef NSString *DSTextElementKey NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(DSRecordTextElements.WellKnownKey);
+typedef NSString *DSTextElementKey NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(DSRecordTextElements.Key);
 DSExternAlias(DSTextElementKey const, DSTextElementKeyRecordID, kDCSTextElementKeyRecordID);
 DSExternAlias(DSTextElementKey const, DSTextElementKeyHeadword, kDCSTextElementKeyHeadword);
 DSExternAlias(DSTextElementKey const, DSTextElementKeySyllabifiedHeadword, kDCSTextElementKeySyllabifiedHeadword);
@@ -87,7 +87,7 @@ NSString * __nullable DSOldNameForTextElementKey(DSTextElementKey textElementKey
     NS_SWIFT_NAME(getter:DSTextElementKey.oldName(self:));
 
 
-typedef NSString *DSXSLArgumentKey NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(DSDictionaryXSLArguments.WellKnownKey);
+typedef NSString *DSXSLArgumentKey NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(DSXSLArguments.Key);
 extern DSXSLArgumentKey const DSXSLArgumentKeyParentalControl;
 extern DSXSLArgumentKey const DSXSLArgumentKeyAriaLabel;
 extern DSXSLArgumentKey const DSXSLArgumentKeyBaseURL;

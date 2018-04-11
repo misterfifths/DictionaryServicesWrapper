@@ -2,6 +2,7 @@
 // 2018 / Tim Clem / github.com/misterfifths
 // Public domain.
 
+#import <Foundation/Foundation.h>
 #import "DSMutableDictionaryWrapper.h"
 #import "DSDefines.h"
 #import "DSConstants.h"
@@ -10,13 +11,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 
-extern NSString * const DSDictionaryXSLStyleSheetContentPlaceholder;
+@interface DSXSLArguments : DSMutableDictionaryWrapper<DSXSLArgumentKey, NSString *> <NSMutableCopying>
 
 
-@interface DSDictionaryXSLArguments : DSMutableDictionaryWrapper<DSXSLArgumentKey, NSString *> <NSMutableCopying>
-
-
-// Known arguments:
+// Known arguments for record transforms:
 /*
  parental-control: '' or '1'
  aria-label: string, copied to <html> in result of the app & panel xforms
@@ -29,6 +27,8 @@ extern NSString * const DSDictionaryXSLStyleSheetContentPlaceholder;
     - internally they seem to have abandoned the idea of putting all the CSS in this, and instead
       put a placeholder string in and then replace that string with the CSS blob
  */
+
++(BOOL)replaceCSSPlaceholderInDocument:(NSXMLDocument *)xmlDoc withContent:(NSString *)css;
 
 
 @property (nonatomic, getter=isParentalControlEnabled) BOOL parentalControlEnabled;

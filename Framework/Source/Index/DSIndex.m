@@ -32,10 +32,12 @@ static const size_t DSIndexSearchDefaultRecordBatchLimit = 1000;
 // Public
 -(instancetype)initWithName:(DSIndexName)indexName dictionary:(DSDictionary *)dictionary
 {
+    NSAssert(dictionary.URL != nil, @"Don't ask for index info on a dictionary that isn't downloaded.");
+
     DSIndexInfo *info = [dictionary infoForIndexNamed:indexName];
     NSAssert(info != nil, @"Unknown index name '%@'", indexName);
 
-    IDXIndexRef indexRef = IDXCreateIndexObject(NULL, dictionary.URL, indexName);
+    IDXIndexRef indexRef = IDXCreateIndexObject(NULL, (NSURL * __nonnull)dictionary.URL, indexName);
     NSAssert(indexRef != nil, @"Couldn't make instance of index %@", indexName);
 
     self = [self initWithIndexRef:indexRef

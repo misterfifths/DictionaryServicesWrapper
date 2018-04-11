@@ -2,16 +2,25 @@
 // 2018 / Tim Clem / github.com/misterfifths
 // Public domain.
 
+#import <Foundation/Foundation.h>
+
+
 #define DS_WARN_UNUSED_RESULT __attribute__((warn_unused_result))
 
 
-typedef uint64_t DSBodyDataID;
+typedef uint64_t DSBodyDataID NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(DSRecord.BodyDataID);
 
 
-static inline NSString *DSStringForBodyDataID(DSBodyDataID bodyDataID) DS_WARN_UNUSED_RESULT;
-static inline NSNumber *DSNumberForBodyDataID(DSBodyDataID bodyDataID) DS_WARN_UNUSED_RESULT;
-static inline DSBodyDataID DSBodyDataIDFromString(NSString *bodyDataIDString) DS_WARN_UNUSED_RESULT;
-static inline DSBodyDataID DSBodyDataIDFromNumber(NSNumber *bodyDataIDNumber) DS_WARN_UNUSED_RESULT;
+NS_ASSUME_NONNULL_BEGIN
+
+
+static inline NSString *DSStringForBodyDataID(DSBodyDataID bodyDataID) DS_WARN_UNUSED_RESULT NS_SWIFT_NAME(getter:DSBodyDataID.stringValue(self:));
+
+static inline NSNumber *DSNumberForBodyDataID(DSBodyDataID bodyDataID) DS_WARN_UNUSED_RESULT NS_SWIFT_UNAVAILABLE("NSNumbers are pretty much dead in Swift");
+
+static inline DSBodyDataID DSBodyDataIDFromString(NSString *bodyDataIDString) DS_WARN_UNUSED_RESULT NS_SWIFT_NAME(DSBodyDataID.init(stringValue:));
+
+static inline DSBodyDataID DSBodyDataIDFromNumber(NSNumber *bodyDataIDNumber) DS_WARN_UNUSED_RESULT NS_SWIFT_UNAVAILABLE("NSNumbers are pretty much dead in Swift");
 
 
 static inline NSString *DSStringForBodyDataID(DSBodyDataID bodyDataID)
@@ -36,3 +45,6 @@ static inline DSBodyDataID DSBodyDataIDFromNumber(NSNumber *bodyDataIDNumber)
 {
     return [bodyDataIDNumber unsignedLongLongValue];
 }
+
+
+NS_ASSUME_NONNULL_END

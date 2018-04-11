@@ -8,6 +8,7 @@
 #import "DSEnvironment.h"
 #import "DSXMLUtils.h"
 #import "DSMiscUtils.h"
+#import "DSXSLArguments.h"
 
 
 @interface DSSyntheticRecord ()
@@ -187,7 +188,7 @@
 
     if(xslStack) {
         NSString *titleForXSL = self.title.length == 0 ? self.headword : self.title;
-        DSDictionaryXSLArguments *xslArgs = self.dictionary.defaultXSLArguments;
+        DSXSLArguments *xslArgs = self.dictionary.defaultXSLArguments;
         [xslArgs setString:titleForXSL forKey:DSXSLArgumentKeyAriaLabel escape:YES];
         if(style != DSDefinitionStylePlainText) [xslArgs setStylesheetContentPlaceholder];
 
@@ -204,7 +205,7 @@
         return transformedDoc.ds_sanitizedText;
     }
 
-    [transformedDoc ds_replaceCSSPlaceholderWithContent:self.dictionary.styleSheetContent];
+    [DSXSLArguments replaceCSSPlaceholderInDocument:transformedDoc withContent:self.dictionary.styleSheetContent];
 
     // Got me... framework behavior to not put the <meta> content-type tag in style 0
     BOOL includeContentTypeInOutput = style != DSDefinitionStyleBareXHTML;

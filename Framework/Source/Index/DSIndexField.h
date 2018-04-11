@@ -26,6 +26,7 @@ NS_SWIFT_NAME(DSIndex.Field)
 @end
 
 
+NS_SWIFT_NAME(DSIndex.FixedLengthField)
 @interface DSFixedLengthIndexField : DSIndexField
 
 @property (nonatomic, readonly) NSUInteger dataSize;
@@ -33,6 +34,7 @@ NS_SWIFT_NAME(DSIndex.Field)
 @end
 
 
+NS_SWIFT_NAME(DSIndex.ExternalDataField)
 @interface DSExternalDataIndexField : DSFixedLengthIndexField
 
 @property (nonatomic, readonly, copy) NSString *externalIndexName;
@@ -40,6 +42,7 @@ NS_SWIFT_NAME(DSIndex.Field)
 @end
 
 
+NS_SWIFT_NAME(DSIndex.VariableLengthField)
 @interface DSVariableLengthIndexField : DSIndexField
 
 @property (nonatomic, readonly) NSUInteger dataSizeLength;

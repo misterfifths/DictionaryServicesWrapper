@@ -117,10 +117,12 @@ extern DCSDictionaryRef __nullable DCSDictionaryCreateWithIdentifier(NSString *i
 #pragma mark Properties
 
 // Assuming nonnull on these. If they're null, the dictionary is really weird/broken.
-extern NSURL *DCSDictionaryGetURL(DCSDictionaryRef dictionary);
 extern NSString *DCSDictionaryGetName(DCSDictionaryRef dictionary);
 extern NSString *DCSDictionaryGetShortName(DCSDictionaryRef dictionary);
 extern NSString *DCSDictionaryGetIdentifier(DCSDictionaryRef dictionary);
+
+// This is null if the dictionary's not actually downloaded (e.g., instances gotten through CopyAvailableDictionaries)
+extern NSURL * __nullable DCSDictionaryGetURL(DCSDictionaryRef dictionary);
 
 extern Boolean DCSDictionaryIsNetworkService(DCSDictionaryRef dictionary);
 extern Boolean DCSDictionaryIsSupportedDefinitionStyle(DCSDictionaryRef dictionary, DCSDefinitionStyle format);

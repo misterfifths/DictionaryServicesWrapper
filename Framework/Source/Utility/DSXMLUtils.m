@@ -3,7 +3,7 @@
 // Public domain.
 
 #import "DSXMLUtils.h"
-#import "DSDictionaryXSLArguments.h"
+#import "DSXSLArguments.h"
 
 
 @implementation NSXMLNode (DSHelpers)
@@ -85,7 +85,7 @@
 @implementation NSXMLDocument (DSHelpers)
 
 -(NSXMLDocument *)ds_XMLDocumentByApplyingXSL:(NSXMLDocument *)xslDoc
-                                    arguments:(DSDictionaryXSLArguments *)xslArguments
+                                    arguments:(DSXSLArguments *)xslArguments
 {
     // TODO: if speed is unacceptable, switching to libxml2 here is the first logical step.
     // Just caching the pre-compiled XSLs would be a *huge* improvement.
@@ -105,7 +105,7 @@
 }
 
 -(NSXMLDocument *)ds_XMLDocumentByApplyingXSLs:(NSArray *)xslDocs
-                                     arguments:(DSDictionaryXSLArguments *)xslArguments
+                                     arguments:(DSXSLArguments *)xslArguments
 {
     NSXMLDocument *res = self;
     for(NSXMLDocument *xslDoc in xslDocs) {
@@ -113,35 +113,6 @@
     }
 
     return res;
-}
-
--(BOOL)ds_replaceCSSPlaceholderWithContent:(NSString *)css
-{
-    // Seems like a safe assumption it's in a <style>, yah?
-    NSString *placeholderXPath = [NSString stringWithFormat:@"//style[contains(text(), '%@')]", DSDictionaryXSLStyleSheetContentPlaceholder];
-
-    NSError *xpathError = nil;
-    NSArray *placeholderNodes = [self nodesForXPath:placeholderXPath error:&xpathError];
-    NSAssert(placeholderNodes != nil, @"XPath error: %@", xpathError);
-
-    if(placeholderNodes.count == 0) return NO;
-
-    NSXMLElement *placeholderNode = placeholderNodes[0];
-    NSAssert(placeholderNode.childCount == 1 && placeholderNode.children[0].kind == NSXMLTextKind, @"Placeholder node should have exactly one child, and it should be text.");
-
-    NSString *escapedCSS = [NSString stringWithFormat:@"/*<![CDATA[*/ %@ /*]]>*/", css];
-
-    NSMutableString *nodeContent = [placeholderNode.stringValue mutableCopy];
-    // Only replacing the first match. Seems safe.
-    NSRange replacementRange = [nodeContent rangeOfString:DSDictionaryXSLStyleSheetContentPlaceholder];
-    [nodeContent replaceCharactersInRange:replacementRange withString:css];
-
-    NSXMLNode *newTextNode = [[NSXMLNode alloc] initWithKind:NSXMLTextKind options:NSXMLNodeNeverEscapeContents | NSXMLNodePreserveAll];
-    newTextNode.stringValue = escapedCSS;
-
-    [placeholderNode setChildren:@[ newTextNode ]];
-
-    return YES;
 }
 
 -(NSString *)ds_canonicalXMLStringIncludingContentType:(BOOL)includeContentType

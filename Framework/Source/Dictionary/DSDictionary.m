@@ -7,6 +7,7 @@
 #import "DSRecordPrivate.h"
 #import "NSLocale+DSHelpers.h"
 #import "NSString+DSHelpers.h"
+#import "DSXSLArguments.h"
 
 
 @interface DSDictionary ()
@@ -187,13 +188,15 @@
 
 -(NSArray *)indexNames
 {
-    return IDXCopyIndexNames(self.URL, NO);
+    NSAssert(self.URL != nil, @"Don't ask for index info on a dictionary that isn't downloaded.");
+    return IDXCopyIndexNames((NSURL * __nonnull)self.URL, NO);
 }
 
 -(NSBundle *)bundle
 {
     if(!_bundle) {
-        _bundle = [NSBundle bundleWithURL:self.URL];
+        NSAssert(self.URL != nil, @"Don't ask for bundle info on a dictionary that isn't downloaded.");
+        _bundle = [NSBundle bundleWithURL:(NSURL * __nonnull)self.URL];
     }
 
     return _bundle;
@@ -339,10 +342,10 @@
     return DCSDictionaryGetPreferences(self.dictRef) ?: self.defaultPreferences;
 }
 
--(DSDictionaryXSLArguments *)defaultXSLArguments
+-(DSXSLArguments *)defaultXSLArguments
 {
     if(!_defaultXSLArguments) {
-        DSDictionaryXSLArguments *args = [[DSDictionaryXSLArguments alloc] initWithDictionary:self.preferences];
+        DSXSLArguments *args = [[DSXSLArguments alloc] initWithDictionary:self.preferences];
 
         args.ariaLabel = @"''";
         args.parentalControlEnabled = NO;

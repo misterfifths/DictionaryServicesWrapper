@@ -24,6 +24,4 @@ FOUNDATION_EXPORT const unsigned char DictionaryServicesWrapperVersionString[];
 #import "DSIndexField.h"
 #import "DSIndexEntry.h"
 
-#import "DSDictionaryXSLArguments.h"
-
 #import "NSString+DSHelpers.h"

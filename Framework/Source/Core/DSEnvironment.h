@@ -20,6 +20,10 @@ NS_ASSUME_NONNULL_BEGIN
 +(nullable NSXMLDocument *)XSLDocumentForDefinitionStyle:(DSDefinitionStyle)style DS_WARN_UNUSED_RESULT;
 @property (nonatomic, readonly, copy, class) NSXMLDocument *baseDefinitionXSLDocument;
 
+
++(instancetype)new NS_UNAVAILABLE;
+-(instancetype)init NS_UNAVAILABLE;
+
 @end
 
 

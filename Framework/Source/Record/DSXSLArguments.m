@@ -2,13 +2,13 @@
 // 2018 / Tim Clem / github.com/misterfifths
 // Public domain.
 
-#import "DSDictionaryXSLArguments.h"
+#import "DSXSLArguments.h"
 
 
-NSString * const DSDictionaryXSLStyleSheetContentPlaceholder = @"--- 💃 CSS Content Placeholder because XSL Kinda Sucks 🌈 ---";
+static NSString * const DSXSLArgumentsPlaceholderForCSS = @"--- 💃 CSS Content Placeholder because XSL Kinda Sucks 🌈 ---";
 
 
-@implementation DSDictionaryXSLArguments
+@implementation DSXSLArguments
 
 +(id)sharedKeySet
 {
@@ -68,14 +68,43 @@ NSString * const DSDictionaryXSLStyleSheetContentPlaceholder = @"--- 💃 CSS Co
     return [s stringByAddingPercentEncodingWithAllowedCharacters:goodChars];
 }
 
++(BOOL)replaceCSSPlaceholderInDocument:(NSXMLDocument *)xmlDoc withContent:(NSString *)css
+{
+    // Seems like a safe assumption it's in a <style>, yah?
+    NSString *placeholderXPath = [NSString stringWithFormat:@"//style[contains(text(), '%@')]", DSXSLArgumentsPlaceholderForCSS];
+
+    NSError *xpathError = nil;
+    NSArray *placeholderNodes = [xmlDoc nodesForXPath:placeholderXPath error:&xpathError];
+    NSAssert(placeholderNodes != nil, @"XPath error: %@", xpathError);
+
+    if(placeholderNodes.count == 0) return NO;
+
+    NSXMLElement *placeholderNode = placeholderNodes[0];
+    NSAssert(placeholderNode.childCount == 1 && placeholderNode.children[0].kind == NSXMLTextKind, @"Placeholder node should have exactly one child, and it should be text.");
+
+    NSString *escapedCSS = [NSString stringWithFormat:@"/*<![CDATA[*/ %@ /*]]>*/", css];
+
+    NSMutableString *nodeContent = [placeholderNode.stringValue mutableCopy];
+    // Only replacing the first match. Seems safe.
+    NSRange replacementRange = [nodeContent rangeOfString:DSXSLArgumentsPlaceholderForCSS];
+    [nodeContent replaceCharactersInRange:replacementRange withString:css];
+
+    NSXMLNode *newTextNode = [[NSXMLNode alloc] initWithKind:NSXMLTextKind options:NSXMLNodeNeverEscapeContents | NSXMLNodePreserveAll];
+    newTextNode.stringValue = escapedCSS;
+
+    [placeholderNode setChildren:@[ newTextNode ]];
+
+    return YES;
+}
+
 -(void)setString:(NSString *)value forKey:(NSString *)key escape:(BOOL)escape
 {
-    self[key] = escape ? [DSDictionaryXSLArguments XSLParameterStringForString:value] : value;
+    self[key] = escape ? [DSXSLArguments XSLParameterStringForString:value] : value;
 }
 
 -(void)setURL:(NSURL *)url forKey:(NSString *)key escape:(BOOL)escape
 {
-    self[key] = escape ? [DSDictionaryXSLArguments XSLParameterStringForURL:url] : url.absoluteString;
+    self[key] = escape ? [DSXSLArguments XSLParameterStringForURL:url] : url.absoluteString;
 }
 
 // The XSLs here consider '1' and only '1' to be true
@@ -143,7 +172,7 @@ NSString * const DSDictionaryXSLStyleSheetContentPlaceholder = @"--- 💃 CSS Co
 
 -(void)setStylesheetContentPlaceholder
 {
-    self.stylesheetContent = DSDictionaryXSLStyleSheetContentPlaceholder;
+    self.stylesheetContent = DSXSLArgumentsPlaceholderForCSS;
 }
 
 -(id)mutableCopyWithZone:(NSZone *)zone

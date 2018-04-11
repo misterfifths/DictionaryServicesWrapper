@@ -11,7 +11,6 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wobjc-interface-ivars"
 
-
 @interface DSDictionaryWrapper<__covariant KeyType : id<NSCopying>, __covariant ObjectType> : NSObject<NSFastEnumeration>
 {
     @protected

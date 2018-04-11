@@ -24,6 +24,10 @@ NS_SWIFT_NAME(DSRecord.BodyParser)
 // It does the right thing for most naughty words, though, which is what's truly important.
 +(NSArray<DSRecordSubEntry *> *)parseSubEntryFragment:(NSXMLElement *)elem DS_WARN_UNUSED_RESULT;
 
+
++(instancetype)new NS_UNAVAILABLE;
+-(instancetype)init NS_UNAVAILABLE;
+
 @end
 
 
