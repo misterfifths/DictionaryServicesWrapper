@@ -11,24 +11,13 @@
 
 @implementation DSRecordTextElements
 
-+(id)sharedKeySet
-{
-    static id keySet;
-
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        keySet = [NSMutableDictionary sharedKeySetForKeys:@[ DSTextElementKeyRecordID,
-                                                             DSTextElementKeyHeadword,
-                                                             DSTextElementKeyTitle,
-                                                             DSTextElementKeySyllabifiedHeadword,
-                                                             DSTextElementKeyPartOfSpeech,
-                                                             DSTextElementKeyPronunciation,
-                                                             DSTextElementKeySenses ]];
-    });
-
-    return keySet;
-}
-
+DS_MDW_SharedKeySetImpl(DSTextElementKeyRecordID,
+                        DSTextElementKeyHeadword,
+                        DSTextElementKeyTitle,
+                        DSTextElementKeySyllabifiedHeadword,
+                        DSTextElementKeyPartOfSpeech,
+                        DSTextElementKeyPronunciation,
+                        DSTextElementKeySenses);
 
 DS_MDW_StringPropertyImpl(referenceID, setReferenceID, DSTextElementKeyRecordID);
 DS_MDW_StringPropertyImpl(headword, setHeadword, DSTextElementKeyHeadword);

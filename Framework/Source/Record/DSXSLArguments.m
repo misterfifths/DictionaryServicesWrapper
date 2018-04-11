@@ -3,6 +3,7 @@
 // Public domain.
 
 #import "DSXSLArguments.h"
+#import "DSMutableDictionaryWrapperUtils.h"
 
 
 static NSString * const DSXSLArgumentsPlaceholderForCSS = @"--- 💃 CSS Content Placeholder because XSL Kinda Sucks 🌈 ---";
@@ -10,21 +11,11 @@ static NSString * const DSXSLArgumentsPlaceholderForCSS = @"--- 💃 CSS Content
 
 @implementation DSXSLArguments
 
-+(id)sharedKeySet
-{
-    static id keySet;
-
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        keySet = [NSMutableDictionary sharedKeySetForKeys:@[ DSXSLArgumentKeyParentalControl,
-                                                             DSXSLArgumentKeyAriaLabel,
-                                                             DSXSLArgumentKeyBaseURL,
-                                                             DSXSLArgumentKeyRTLDirection,
-                                                             DSXSLArgumentKeyStylesheetContent ]];
-    });
-
-    return keySet;
-}
+DS_MDW_SharedKeySetImpl(DSXSLArgumentKeyParentalControl,
+                        DSXSLArgumentKeyAriaLabel,
+                        DSXSLArgumentKeyBaseURL,
+                        DSXSLArgumentKeyRTLDirection,
+                        DSXSLArgumentKeyStylesheetContent);
 
 +(NSString *)XSLParameterStringForString:(NSString *)s
 {

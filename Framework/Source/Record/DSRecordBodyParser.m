@@ -7,22 +7,35 @@
 #import "DSMutableDictionaryWrapperUtils.h"
 
 
+static NSString * const DSLanguageNotesKey = @"languageNotes";
+static NSString * const DSDefinitionKey = @"definition";
+static NSString * const DSExampleKey = @"example";
+static NSString * const DSWordKey = @"word";
+static NSString * const DSPronunciationKey = @"pronunciation";
+static NSString * const DSPartOfSpeechKey = @"partOfSpeech";
+static NSString * const DSSensesKey = @"senses";
+
+
 @implementation DSRecordSubEntrySense
 
-DS_MDW_StringPropertyImpl(languageNotes, setLanguageNotes, @"languageNotes");
-DS_MDW_StringPropertyImpl(definition, setDefinition, @"definition");
-DS_MDW_StringPropertyImpl(example, setExample, @"example");
+DS_MDW_SharedKeySetImpl(DSLanguageNotesKey, DSDefinitionKey, DSExampleKey);
+
+DS_MDW_StringPropertyImpl(languageNotes, setLanguageNotes, DSLanguageNotesKey);
+DS_MDW_StringPropertyImpl(definition, setDefinition, DSDefinitionKey);
+DS_MDW_StringPropertyImpl(example, setExample, DSExampleKey);
 
 @end
 
 
 @implementation DSRecordSubEntry
 
-DS_MDW_StringPropertyImpl(word, setWord, @"word");
-DS_MDW_StringPropertyImpl(languageNotes, setLanguageNotes, @"languageNotes");
-DS_MDW_StringPropertyImpl(pronunciation, setPronunciation, @"pronunciation");
-DS_MDW_StringPropertyImpl(partOfSpeech, setPartOfSpeech, @"partOfSpeech");
-DS_MDW_ArrayPropertyImpl(senses, setSenses, @"senses");
+DS_MDW_SharedKeySetImpl(DSWordKey, DSLanguageNotesKey, DSPronunciationKey, DSPartOfSpeechKey, DSSensesKey);
+
+DS_MDW_StringPropertyImpl(word, setWord, DSWordKey);
+DS_MDW_StringPropertyImpl(languageNotes, setLanguageNotes, DSLanguageNotesKey);
+DS_MDW_StringPropertyImpl(pronunciation, setPronunciation, DSPronunciationKey);
+DS_MDW_StringPropertyImpl(partOfSpeech, setPartOfSpeech, DSPartOfSpeechKey);
+DS_MDW_ArrayPropertyImpl(senses, setSenses, DSSensesKey);
 
 @end
 

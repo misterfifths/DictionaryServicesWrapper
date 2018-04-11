@@ -9,24 +9,14 @@
 
 @implementation DSIndexEntry
 
-+(id)sharedKeySet
-{
-    static id keySet;
-
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        keySet = [NSMutableDictionary sharedKeySetForKeys:@[ DSIndexFieldNameExternalBodyID,
-                                                             DSIndexFieldNamePrivateFlag,
-                                                             DSIndexFieldNameKeyword,
-                                                             DSIndexFieldNameHeadword,
-                                                             DSIndexFieldNameEntryTitle,
-                                                             DSIndexFieldNameAnchor,
-                                                             DSIndexFieldNameYomiWord,
-                                                             DSIndexFieldNameSortKey ]];
-    });
-
-    return keySet;
-}
+DS_MDW_SharedKeySetImpl(DSIndexFieldNameExternalBodyID,
+                        DSIndexFieldNamePrivateFlag,
+                        DSIndexFieldNameKeyword,
+                        DSIndexFieldNameHeadword,
+                        DSIndexFieldNameEntryTitle,
+                        DSIndexFieldNameAnchor,
+                        DSIndexFieldNameYomiWord,
+                        DSIndexFieldNameSortKey);
 
 -(DSBodyDataID)externalBodyID
 {

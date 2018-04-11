@@ -145,6 +145,14 @@ typedef NSMutableDictionary<NSString *, NSDictionary *> DSBetterReferenceIndexMu
 
 @implementation DSBetterReferenceIndexEntry
 
+static NSString * const DSBodyDataIDKey = @"bodyDataID";
+static NSString * const DSReferenceIDKey = @"referenceID";
+static NSString * const DSTitleKey = @"title";
+
+
+DS_MDW_SharedKeySetImpl(DSBodyDataIDKey, DSReferenceIDKey, DSTitleKey);
+
+
 // You're just going to have to trust me on this one, clang.
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wnullable-to-nonnull-conversion"
@@ -152,16 +160,16 @@ typedef NSMutableDictionary<NSString *, NSDictionary *> DSBetterReferenceIndexMu
 
 -(DSBodyDataID)bodyDataID
 {
-    return DSBodyDataIDFromNumber(self[@"bodyDataID"]);
+    return DSBodyDataIDFromNumber(self[DSBodyDataIDKey]);
 }
 
 -(void)setBodyDataID:(DSBodyDataID)bodyDataID
 {
-    self[@"bodyDataID"] = DSNumberForBodyDataID(bodyDataID);
+    self[DSBodyDataIDKey] = DSNumberForBodyDataID(bodyDataID);
 }
 
-DS_MDW_StringPropertyImpl(referenceID, setReferenceID, @"referenceID");
-DS_MDW_StringPropertyImpl(title, setTitle, @"title");
+DS_MDW_StringPropertyImpl(referenceID, setReferenceID, DSReferenceIDKey);
+DS_MDW_StringPropertyImpl(title, setTitle, DSTitleKey);
 
 
 #pragma clang diagnostic pop
