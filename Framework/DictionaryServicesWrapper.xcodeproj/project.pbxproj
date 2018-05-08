@@ -39,7 +39,6 @@
 		BD1C2A6F206DF7B800C821AC /* DSXMLUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = BD1C2A41206DD8EE00C821AC /* DSXMLUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BD1C2A70206DF7B800C821AC /* DSXMLUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BD1C2A42206DD8EE00C821AC /* DSXMLUtils.m */; };
 		BD1CCD212071C8F700C5E5D8 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD1C2A74206DFAF000C821AC /* CoreServices.framework */; };
-		BD2B04E8207D896900FFB4CA /* SwiftRefinements.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2B04E7207D896900FFB4CA /* SwiftRefinements.swift */; };
 		BD4627212078628900757D5E /* DSSyntheticRecord.h in Headers */ = {isa = PBXBuildFile; fileRef = BD4627202078615100757D5E /* DSSyntheticRecord.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BD4627492079E5DC00757D5E /* DSSynthesizedIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = BD4627422079E5DB00757D5E /* DSSynthesizedIndex.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BD46274A2079E5DC00757D5E /* DSSynthesizedIndexPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = BD4627432079E5DB00757D5E /* DSSynthesizedIndexPrivate.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -87,7 +86,6 @@
 		BD1C2A42206DD8EE00C821AC /* DSXMLUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DSXMLUtils.m; sourceTree = "<group>"; };
 		BD1C2A4C206DF79500C821AC /* DictionaryServicesWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DictionaryServicesWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD1C2A74206DFAF000C821AC /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
-		BD2B04E7207D896900FFB4CA /* SwiftRefinements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftRefinements.swift; sourceTree = "<group>"; };
 		BD4627202078615100757D5E /* DSSyntheticRecord.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DSSyntheticRecord.h; sourceTree = "<group>"; };
 		BD4627422079E5DB00757D5E /* DSSynthesizedIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSSynthesizedIndex.h; sourceTree = "<group>"; };
 		BD4627432079E5DB00757D5E /* DSSynthesizedIndexPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSSynthesizedIndexPrivate.h; sourceTree = "<group>"; };
@@ -152,7 +150,6 @@
 				BD4731D420729F0600BCEF0A /* FrameworkBridging.h */,
 				BD4731D320729F0600BCEF0A /* FrameworkBridging.m */,
 				BD4731D520729F0600BCEF0A /* FrameworkInternals.h */,
-				BD2B04E7207D896900FFB4CA /* SwiftRefinements.swift */,
 				BDBA00D720701B4000730A55 /* Core */,
 				BDBA00D620701B1500730A55 /* Dictionary */,
 				BDBA00D420701A9600730A55 /* Record */,
@@ -424,7 +421,6 @@
 				BD1C2A68206DF7B800C821AC /* DSRecordTextElements.m in Sources */,
 				BD1C2A5F206DF7B800C821AC /* DSRecord.m in Sources */,
 				BDBA00DE2070547700730A55 /* DSIndexInfo.m in Sources */,
-				BD2B04E8207D896900FFB4CA /* SwiftRefinements.swift in Sources */,
 				BD1C2A62206DF7B800C821AC /* DSSyntheticRecord.m in Sources */,
 				BD46274C2079E5DC00757D5E /* DSReverseKeywordIndex.m in Sources */,
 				BD1C2A64206DF7B800C821AC /* DSEnvironment.m in Sources */,
@@ -441,7 +437,6 @@
 		BD1C2A52206DF79600C821AC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_STATIC_ANALYZER_MODE = deep;
 				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_INTEGER = YES;
@@ -463,12 +458,12 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = DictionaryServicesWrapper.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.misterfifths.DictionaryServicesWrapper;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SKIP_INSTALL = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -489,7 +484,6 @@
 		BD1C2A53206DF79600C821AC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_STATIC_ANALYZER_MODE = deep;
 				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_INTEGER = YES;
@@ -511,12 +505,12 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = DictionaryServicesWrapper.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.misterfifths.DictionaryServicesWrapper;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SKIP_INSTALL = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_VERSION = 4.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
