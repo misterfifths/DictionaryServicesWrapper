@@ -5,6 +5,13 @@
 #import <Quartz/Quartz.h>
 
 
+// The name of the dictionary and info dictionary to dump.
+// If infoDictFilename is nil, the program will dump the first entry matching
+// the dictionary name.
+static NSString * const dictionaryName = @"New Oxford American Dictionary";
+static NSString * const infoDictFilename = @"noad-super-list.plist";
+
+
 @interface WOTDPlugInMock : QCPlugIn
 
 +(NSArray<NSDictionary *> *)dictionaryList;
@@ -64,19 +71,17 @@ int main(int argc, const char * argv[]) {
         // Call +[WOTDPlugin dictionaryList], which returns specially-formatted NSDictionaries of supported dictionaries.
         // Pull out the entry we want.
         NSArray *dictionaries = [pluginClass dictionaryList];
-        NSString *noadName = @"New Oxford American Dictionary";
-        NSString *winningInfoDictFilename = @"noad-super-list.plist";
-        NSDictionary *noadDictInfo = nil;
+        NSDictionary *winningDictInfo = nil;
         for(NSDictionary *dictInfo in dictionaries) {
-            if([dictInfo[@"dictName"] isEqualToString:noadName]) {
+            if([dictInfo[@"dictName"] isEqualToString:dictionaryName]) {
                 NSURL *url = dictInfo[@"wotdInfoURL"];
-                if([url.lastPathComponent isEqualToString:winningInfoDictFilename]) {
-                    noadDictInfo = dictInfo;
+                if([url.lastPathComponent isEqualToString:infoDictFilename]) {
+                    winningDictInfo = dictInfo;
                     break;
                 }
             }
         }
-        NSCAssert(noadDictInfo != nil, @"Couldn't get dictionary info");
+        NSCAssert(winningDictInfo != nil, @"Couldn't get dictionary info");
 
 
         // Make an instance of the plugin, because _dumpAllEntries: is an instance method for some reason...
@@ -101,7 +106,7 @@ int main(int argc, const char * argv[]) {
         // ~/Library/Logs/WotD/com.apple.dictionary.NOAD.txt now contains all the in the word list,
         // formatted as they will be in the screensaver.
         WOTDPlugInMock *plugin = (WOTDPlugInMock *)realPlugin;
-        [plugin _dumpAllEntries:noadDictInfo];
+        [plugin _dumpAllEntries:winningDictInfo];
 
 
         [[NSWorkspace sharedWorkspace] openURL:logURL];
