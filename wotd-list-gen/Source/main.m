@@ -9,6 +9,10 @@
 #import "WotDEntry.h"
 
 
+static NSString * const dictionaryIdentifier = @"com.apple.dictionary.NOAD";
+static NSString * const outputPlistFilename = @"~/Library/Graphics/Quartz Composer Plug-Ins/WOTD.plugin/Contents/Resources/WordLists/noad-super-list.plist";
+
+
 NSDictionary<NSString *, id> *WotdPlistForEntriesInDictionary(DSDictionary *dict, NSArray<WotDEntry *> *entries)
 {
     // Using the dictionary's XPaths was causing crashes here sometimes (they must reference an attribute when WotD was expecting a node?)
@@ -29,7 +33,7 @@ NSDictionary<NSString *, id> *WotdPlistForEntriesInDictionary(DSDictionary *dict
 int main(int argc, const char *argv[])
 {
     @autoreleasepool {
-        DSDictionary *dict = DSDictionary.defaultDictionary;
+        DSDictionary *dict = [[DSDictionary alloc] initWithIdentifier:dictionaryIdentifier];
 
         DSReverseKeywordIndex *revIdx = dict.reverseKeywordIndex;
 
@@ -83,7 +87,7 @@ int main(int argc, const char *argv[])
 
 
         NSDictionary *wotdPlist = WotdPlistForEntriesInDictionary(dict, bigAssList);
-        DSWritePlistObjectToFile(wotdPlist, [NSURL fileURLWithPath:@"~/Library/Graphics/Quartz Composer Plug-Ins/WOTD.plugin/Contents/Resources/WordLists/noad-super-list.plist".stringByExpandingTildeInPath]);
+        DSWritePlistObjectToFile(wotdPlist, [NSURL fileURLWithPath:outputPlistFilename.stringByExpandingTildeInPath]);
     }
 
     return 0;
