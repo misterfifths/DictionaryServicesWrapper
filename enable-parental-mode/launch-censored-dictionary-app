@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# This script will launch a censored Dictionary.app instance by putting
+# the proper plist in /Library/Managed Preferences/<your username>,
+# restarting the preferences daemon, and launching a new instance.
+
 set -euo pipefail
 
 function die() {

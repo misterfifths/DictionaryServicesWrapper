@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# This script will patch the default Dictionary.app CSS to display all
+# content that would be censored under parental controls with a red background.
+# Running this script twice will undo the patch.
+
+set -euo pipefail
+
+function die() {
+    echo -e "💀 $*"
+    exit 1
+}
+
+PATCH_FILE="parental-control-css.patch"
+DEST_FILE="/Applications/Dictionary.app/Contents/Resources/DefaultStyle.css"
+
+cd "$(dirname "$0")"
+
+[ -f "$PATCH_FILE" ] || die "Couldn't find the patch file $PATCH_FILE"
+
+[ -f "$DEST_FILE" ] || die "Couldn't find the file to patch, $DEST_FILE"
+
+echo ">> Applying CSS patch..."
+
+echo sudo patch -t -r- "$DEST_FILE" "$PATCH_FILE"
+sudo patch -t -r- "$DEST_FILE" "$PATCH_FILE"
+
+echo "Relaunch Dictionary.app for the patch to take effect."
