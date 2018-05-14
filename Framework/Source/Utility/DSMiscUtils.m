@@ -60,11 +60,15 @@ void DSWritePlistObjectToFile(id plistObj, NSURL *fileURL)
 {
     NSOutputStream *outputStream = [NSOutputStream outputStreamWithURL:fileURL append:NO];
     [outputStream open];
+
     NSError *error = nil;
-    if(![NSPropertyListSerialization writePropertyList:plistObj toStream:outputStream format:NSPropertyListBinaryFormat_v1_0 options:0 error:&error]) {
+    BOOL success = [NSPropertyListSerialization writePropertyList:plistObj toStream:outputStream format:NSPropertyListBinaryFormat_v1_0 options:0 error:&error];
+
+    [outputStream close];
+
+    if(!success) {
         NSCAssert(NO, @"Error writing plist: %@", error);
     }
-    [outputStream close];
 }
 
 
@@ -78,11 +82,11 @@ id DSReadPlistObjectFromFile(NSURL *fileURL, BOOL mutableContainers)
     NSError *error = nil;
     id plistObj = [NSPropertyListSerialization propertyListWithStream:inputStream options:mutableContainers ? NSPropertyListMutableContainersAndLeaves : 0 format:NULL error:&error];
 
+    [inputStream close];
+
     if(!plistObj) {
         NSCAssert(NO, @"Error reading plist: %@", error);
     }
-
-    [inputStream close];
 
     return plistObj;
 }
