@@ -7,10 +7,7 @@
 @import DictionaryServicesWrapper.RecordSynthesis;
 @import DictionaryServicesWrapper.MiscUtils;
 #import "WotDEntry.h"
-
-
-static NSString * const dictionaryIdentifier = @"com.apple.dictionary.NOAD";
-static NSString * const outputPlistFilename = @"~/Library/Graphics/Quartz Composer Plug-Ins/WOTD.plugin/Contents/Resources/WordLists/noad-super-list.plist";
+#import "CommandLineHelpers.h"
 
 
 NSDictionary<NSString *, id> *WotdPlistForEntriesInDictionary(DSDictionary *dict, NSArray<WotDEntry *> *entries)
@@ -30,64 +27,107 @@ NSDictionary<NSString *, id> *WotdPlistForEntriesInDictionary(DSDictionary *dict
 }
 
 
+NSMutableArray<WotDEntry *> *_createWordList(DSDictionary *dict, DSReverseKeywordIndex *revIdx)
+{
+    NSString *censoredContentXPath = @"//*[@d:parental-control]";
+
+    NSMutableArray<WotDEntry *> *bigAssList = [NSMutableArray arrayWithCapacity:1200];
+    __block NSUInteger numberOfBodiesSeen = 0;
+
+
+    [revIdx enumerateBodiesUsingBlock:^(DSBodyDataID bodyDataID, NSArray<DSIndexEntry *> *indexEntries, BOOL *stop) {
+        if(++numberOfBodiesSeen % 1000 == 0) fputc('.', stderr);
+
+
+        NSXMLDocument *bodyXML = [dict.xmlDocumentCache documentForBodyDataID:bodyDataID];
+
+        // Is the whole document censored?
+        if([bodyXML.rootElement attributeForName:@"d:parental-control"] != nil) {
+            DSRecord *rec = [[DSSyntheticRecord alloc] initWithDictionary:dict recordXMLNoCopy:bodyXML];
+
+            WotDEntry *wotdEntry = [WotDEntry entryForRecord:rec byReference:YES];  // see the note in that method about byRef
+            if(wotdEntry) [bigAssList addObject:wotdEntry];
+
+            return;
+        }
+
+
+        // Check for partially censored content
+        NSError *error = nil;
+        NSArray *censoredNodes = [bodyXML nodesForXPath:censoredContentXPath error:&error];
+        NSCAssert(censoredNodes != nil, @"Error running XPath: %@", error);
+
+        if(censoredNodes.count == 0) return;  // Nothing naughty here.
+
+
+        // Collect the censored bits and make nice WotDEntry instances out of them.
+        DSRecord *rec = nil;  // making these is slow; holding off until we know we need it
+
+        for(NSXMLElement *censoredNode in censoredNodes) {
+            NSArray<DSRecordSubEntry *> *parsedCensoredNodes = [DSRecordBodyParser parseSubEntryFragment:censoredNode];
+            for(DSRecordSubEntry *parsedCensoredNode in parsedCensoredNodes) {
+                if(!rec) rec = [[DSSyntheticRecord alloc] initWithDictionary:dict recordXMLNoCopy:bodyXML];
+
+                WotDEntry *wotdEntry = [WotDEntry entryForRecordSubEntry:parsedCensoredNode ofRecord:rec];
+                if(wotdEntry) [bigAssList addObject:wotdEntry];
+            }
+        }
+    }];
+
+    return bigAssList;
+}
+
 int main(int argc, const char *argv[])
 {
     @autoreleasepool {
-        DSDictionary *dict = [[DSDictionary alloc] initWithIdentifier:dictionaryIdentifier];
+        NSArray<NSString *> *args = NSProcessInfo.processInfo.arguments;
 
-        DSReverseKeywordIndex *revIdx = dict.reverseKeywordIndex;
+        NSString *dictionaryIdentifier = @"com.apple.dictionary.NOAD";
+        NSString *defaultOutputDir = [@"~/Library/Graphics/Quartz Composer Plug-Ins/WOTD.plugin/Contents/Resources/WordLists" stringByExpandingTildeInPath];
 
-        NSString *censoredContentXPath = @"//*[@d:parental-control]";
+        if(args.count > 1) {
+            dictionaryIdentifier = args[1];
+        }
 
-        NSMutableArray<WotDEntry *> *bigAssList = [NSMutableArray arrayWithCapacity:1200];
-        __block NSUInteger numberOfBodiesSeen = 0;
+        NSString *dictLoadMessage = [NSString stringWithFormat:@"Loading dictionary %@", dictionaryIdentifier];
+        DSDictionary *dict = task(dictLoadMessage, ^(NSString **errorMessage) {
+            DSDictionary *d = [[DSDictionary alloc] initWithIdentifier:dictionaryIdentifier];
 
-
-        [revIdx enumerateBodiesUsingBlock:^(DSBodyDataID bodyDataID, NSArray<DSIndexEntry *> *indexEntries, BOOL *stop) {
-            ++numberOfBodiesSeen;
-            if(numberOfBodiesSeen % 1000 == 0) putchar('.');
-
-            NSXMLDocument *bodyXML = [dict.xmlDocumentCache documentForBodyDataID:bodyDataID];
-
-
-            // Is the whole document censored?
-            if([bodyXML.rootElement attributeForName:@"d:parental-control"] != nil) {
-                DSRecord *rec = [[DSSyntheticRecord alloc] initWithDictionary:dict recordXMLNoCopy:bodyXML];
-
-                WotDEntry *wotdEntry = [WotDEntry entryForRecord:rec byReference:YES];  // see the note in that method about byRef
-                if(wotdEntry) [bigAssList addObject:wotdEntry];
-
-                return;
+            if(!d) {
+                *errorMessage = @"There is no dictionary with that identifier.";
+            }
+            else if(!d.URL) {
+                *errorMessage = @"That dictionary is not downloaded on this computer.";
             }
 
-
-            // Check for partially censored content
-            NSError *error = nil;
-            NSArray *censoredNodes = [bodyXML nodesForXPath:censoredContentXPath error:&error];
-            NSCAssert(censoredNodes != nil, @"Error running XPath: %@", error);
-
-            if(censoredNodes.count == 0) return;  // Nothing naughty here.
+            return d;
+        });
 
 
-            // Collect the censored bits and make nice WotDEntry instances out of them.
-            DSRecord *rec = nil;  // making these is slow; holding off until we know we need it
+        NSString *outputFilename;
+        if(args.count > 2) {
+            outputFilename = args[2];
+        }
+        else {
+            NSString *plistName = [NSString stringWithFormat:@"badwords_%@.plist", dict.identifier];
+            outputFilename = [defaultOutputDir stringByAppendingPathComponent:plistName];
+        }
 
-            for(NSXMLElement *censoredNode in censoredNodes) {
-                NSArray<DSRecordSubEntry *> *parsedCensoredNodes = [DSRecordBodyParser parseSubEntryFragment:censoredNode];
-                for(DSRecordSubEntry *parsedCensoredNode in parsedCensoredNodes) {
-                    if(!rec) rec = [[DSSyntheticRecord alloc] initWithDictionary:dict recordXMLNoCopy:bodyXML];
+        DSReverseKeywordIndex *revIdx = task(@"Loading reverse keyword index", ^{
+            return dict.reverseKeywordIndex;
+        });
 
-                    WotDEntry *wotdEntry = [WotDEntry entryForRecordSubEntry:parsedCensoredNode ofRecord:rec];
-                    if(wotdEntry) [bigAssList addObject:wotdEntry];
-                }
-            }
-        }];
+        NSMutableArray<WotDEntry *> *bigAssList = task(@"Creating word list", ^{
+            return _createWordList(dict, revIdx);
+        });
 
-        NSLog(@"saving results...");
+        NSDictionary *wotdPlist = task(@"Massaging data", ^{
+            return WotdPlistForEntriesInDictionary(dict, bigAssList);
+        });
 
-
-        NSDictionary *wotdPlist = WotdPlistForEntriesInDictionary(dict, bigAssList);
-        DSWritePlistObjectToFile(wotdPlist, [NSURL fileURLWithPath:outputPlistFilename.stringByExpandingTildeInPath]);
+        NSString *message = [NSString stringWithFormat:@">> Saving results to %@...\n", outputFilename];
+        fputs(message.UTF8String, stderr);
+        DSWritePlistObjectToFile(wotdPlist, [NSURL fileURLWithPath:outputFilename]);
     }
 
     return 0;

@@ -8,12 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		BD416315207401520025050D /* DictionaryServicesWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD416314207401520025050D /* DictionaryServicesWrapper.framework */; };
+		BD4557D420AA418D002FF9C2 /* CommandLineHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = BD4557D320AA418D002FF9C2 /* CommandLineHelpers.m */; };
 		BD46272C20799E7300757D5E /* WotDEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = BD46272B20799E7300757D5E /* WotDEntry.m */; };
 		BDBB4C6420740093006071F5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BDBB4C6320740093006071F5 /* main.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		BD416314207401520025050D /* DictionaryServicesWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DictionaryServicesWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD4557D320AA418D002FF9C2 /* CommandLineHelpers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommandLineHelpers.m; sourceTree = "<group>"; };
+		BD4557D520AA41A5002FF9C2 /* CommandLineHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandLineHelpers.h; sourceTree = "<group>"; };
 		BD46272A20799E7300757D5E /* WotDEntry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WotDEntry.h; sourceTree = "<group>"; };
 		BD46272B20799E7300757D5E /* WotDEntry.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WotDEntry.m; sourceTree = "<group>"; };
 		BDBB4C6020740093006071F5 /* wotd-list-gen */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "wotd-list-gen"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -63,6 +66,8 @@
 				BDBB4C6320740093006071F5 /* main.m */,
 				BD46272A20799E7300757D5E /* WotDEntry.h */,
 				BD46272B20799E7300757D5E /* WotDEntry.m */,
+				BD4557D520AA41A5002FF9C2 /* CommandLineHelpers.h */,
+				BD4557D320AA418D002FF9C2 /* CommandLineHelpers.m */,
 			);
 			name = "wotd-list-gen";
 			path = Source;
@@ -123,6 +128,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD4557D420AA418D002FF9C2 /* CommandLineHelpers.m in Sources */,
 				BDBB4C6420740093006071F5 /* main.m in Sources */,
 				BD46272C20799E7300757D5E /* WotDEntry.m in Sources */,
 			);
